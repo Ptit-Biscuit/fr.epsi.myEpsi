@@ -1,6 +1,6 @@
 package fr.epsi.myEpsi.models.forms;
 
-import fr.epsi.myEpsi.controlers.database.UserDaoImpl;
+import fr.epsi.myEpsi.controlers.database.implementations.UserDaoImpl;
 import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;

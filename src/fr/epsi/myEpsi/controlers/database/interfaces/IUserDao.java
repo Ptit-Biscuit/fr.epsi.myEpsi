@@ -6,14 +6,7 @@ import fr.epsi.myEpsi.models.beans.User;
 /**
  * User DAO
  */
-public interface IUserDao {
-
-	/**
-	 * Check if connection with database is closed or not
-	 *
-	 * @return <code>true</code> if alive, <code>false</code> otherwise
-	 */
-	boolean connectionAlive();
+public interface IUserDao extends IDao {
 
 	/**
 	 * Create a user in database
@@ -32,11 +25,4 @@ public interface IUserDao {
 	 * @throws DaoException if error occurs
 	 */
 	User find(String mail) throws DaoException;
-
-	/**
-	 * Close the connection with database
-	 *
-	 * @throws DaoException if error occurs
-	 */
-	void closeConnection() throws DaoException;
 }

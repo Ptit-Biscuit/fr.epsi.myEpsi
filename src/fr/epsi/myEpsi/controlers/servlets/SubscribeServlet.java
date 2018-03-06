@@ -30,7 +30,7 @@ public class SubscribeServlet extends GenericServlet {
 		User user = SubscribeForm.registerUser(request);
 
 		if (user != null) {
-			// store user and forward to welcome servlet
+			// store user in context and forward to welcome servlet
 			request.getSession().setAttribute("userLogin", user.getMail());
 			request.getRequestDispatcher("/welcome").forward(request, response);
 		} else {

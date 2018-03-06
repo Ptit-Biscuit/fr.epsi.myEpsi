@@ -31,7 +31,7 @@ public class Ad {
 	/**
 	 * Seller
 	 */
-	private User seller;
+	private String seller;
 
 	/**
 	 * Price
@@ -121,8 +121,8 @@ public class Ad {
 	 *
 	 * @param status New Status
 	 */
-	public void setStatus(EStatus status) {
-		this.status = status.ordinal();
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class Ad {
 	 *
 	 * @return Seller
 	 */
-	public User getSeller() {
+	public String getSeller() {
 		return seller;
 	}
 
@@ -139,7 +139,7 @@ public class Ad {
 	 *
 	 * @param seller New Seller
 	 */
-	public void setSeller(User seller) {
+	public void setSeller(String seller) {
 		this.seller = seller;
 	}
 

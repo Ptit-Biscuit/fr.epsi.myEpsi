@@ -2,6 +2,7 @@ package fr.epsi.myEpsi;
 
 import fr.epsi.myEpsi.controlers.database.DaoFactory;
 import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
+import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,10 +50,14 @@ public class ApplicationStartup {
 			public void run() {
 				try {
 					IUserDao userDao = DaoFactory.getInstance().getUserDao();
+					IAdDao adDao = DaoFactory.getInstance().getAdDao();
 
-					if (userDao.connectionAlive()) {
-						// set user DAO in session context
+					if (userDao.connectionAlive() && adDao.connectionAlive()) {
+						// set user DAO in context
 						sessionEvent.getSession().getServletContext().setAttribute("userDao", userDao);
+
+						// set ad DAO in context
+						sessionEvent.getSession().getServletContext().setAttribute("adDao", adDao);
 
 						isInitialized = true;
 

@@ -65,6 +65,11 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 			se.getSession().removeAttribute("userDao");
 		}
 
+		if (se.getSession().getAttribute("adDao") != null) {
+			((IUserDao) se.getSession().getAttribute("adDao")).closeConnection();
+			se.getSession().removeAttribute("adDao");
+		}
+
 		logger.info("Session terminée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
 	}
 }

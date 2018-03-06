@@ -2,6 +2,9 @@ package fr.epsi.myEpsi.controlers.database;
 
 import fr.epsi.myEpsi.controlers.database.exceptions.DaoConfigurationException;
 import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
+import fr.epsi.myEpsi.controlers.database.implementations.AdDaoImpl;
+import fr.epsi.myEpsi.controlers.database.implementations.UserDaoImpl;
+import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 
 import java.io.IOException;
@@ -82,6 +85,7 @@ public class DaoFactory {
 	public static DaoFactory getInstance() throws DaoConfigurationException {
 		Properties properties = new Properties();
 		String driver;
+		String databaseName;
 		String url;
 		String user;
 		String password;
@@ -96,7 +100,8 @@ public class DaoFactory {
 		try {
 			properties.load(daoPropertiesFile);
 			driver = properties.getProperty(PROPERTY_DRIVER);
-			url = properties.getProperty(PROPERTY_URL) + ":" + properties.getProperty(PROPERTY_PORT) + "/" + properties.getProperty(PROPERTY_DATABASE_NAME);
+			databaseName = properties.getProperty(PROPERTY_DATABASE_NAME);
+			url = properties.getProperty(PROPERTY_URL) + ":" + properties.getProperty(PROPERTY_PORT) + "/" + (databaseName != null ? databaseName : "");
 			user = properties.getProperty(PROPERTY_USER);
 			password = properties.getProperty(PROPERTY_PASSWORD);
 		} catch (IOException e) {
@@ -131,6 +136,20 @@ public class DaoFactory {
 	public IUserDao getUserDao() throws DaoException {
 		try {
 			return new UserDaoImpl(this.getConnection());
+		} catch (SQLException e) {
+			throw new DaoException("La connexion avec la BDD est impossible");
+		}
+	}
+
+	/**
+	 * Getter of ad DAO
+	 *
+	 * @return Ad DAO
+	 * @throws DaoException if error occurs
+	 */
+	public IAdDao getAdDao() throws DaoException {
+		try {
+			return new AdDaoImpl(this.getConnection());
 		} catch (SQLException e) {
 			throw new DaoException("La connexion avec la BDD est impossible");
 		}
