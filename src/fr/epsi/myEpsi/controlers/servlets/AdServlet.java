@@ -24,7 +24,8 @@ public class AdServlet extends GenericServlet {
 		if (request.getParameter("userMail") != null) {
 			ads = adDao.getUserAds(request.getParameter("userMail"));
 		} else if (request.getParameter("id") != null) {
-			ads = (List<Ad>) adDao.getAd(request.getParameter("id"));
+			ads = new ArrayList<>();
+			ads.add(adDao.getAd(request.getParameter("id")));
 		} else {
 			ads = adDao.getAllAds();
 		}
