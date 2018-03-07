@@ -5,11 +5,13 @@ import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.management.MBeanServer;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import java.lang.management.ManagementFactory;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -34,6 +36,9 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 		/* This method is called when the servlet context is
 			initialized(when the Web application is deployed).
 			You can initialize servlet context related data here. */
+
+		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+
 		logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte initialisé");
 	}
 
