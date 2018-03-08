@@ -5,6 +5,7 @@ import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;
 import fr.epsi.myEpsi.models.beans.User;
+import fr.epsi.myEpsi.models.beans.UserDefault;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +18,8 @@ public class SubscribeForm {
 	 * Register a user in database
 	 *
 	 * @param request The request from subscribe servlet
-	 * @return The user that has been registered, <code>null</code> otherwise
+	 * @return The user that has been registered, <code>UserDefault</code> otherwise
+	 * @see UserDefault
 	 */
 	public static User registerUser(HttpServletRequest request) {
 		// retrieve data from subscribe form
@@ -26,24 +28,23 @@ public class SubscribeForm {
 		String confirm = ServletUtil.retrieveValue(request, "confirm");
 
 		if (mail == null || password == null || confirm == null)
-			return null;
+			return new UserDefault();
 
 		if (!password.equals(confirm))
-			return null;
+			return new UserDefault();
 
 		User user = new User();
 		user.setMail(mail);
 		user.setPassword(HashUtil.hashPassword(password));
 
-
 		try {
 			if (((IUserDao) request.getServletContext().getAttribute("userDao")).create(user))
 				return user;
 			else {
-				return null;
+				return new UserDefault();
 			}
 		} catch (DaoException e) {
-			return null;
+			return new UserDefault();
 		}
 	}
 }

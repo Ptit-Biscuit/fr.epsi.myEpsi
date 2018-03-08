@@ -13,8 +13,8 @@ import java.io.IOException;
 @WebServlet(name = "Disconnection", urlPatterns = "/disconnect")
 public class DisconnectionServlet extends GenericServlet {
 	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doPost(request, response);
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		super.doGet(request, response);
 
 		// Retrieve and destroy actual session
 		HttpSession session = request.getSession();

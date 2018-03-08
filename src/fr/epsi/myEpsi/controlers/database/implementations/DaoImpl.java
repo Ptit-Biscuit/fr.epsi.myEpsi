@@ -39,7 +39,7 @@ public class DaoImpl implements IDao {
 	}
 
 	@Override
-	public void closeConnection() throws DaoException {
+	public void closeConnection() {
 		try {
 			if (!this.connection.isClosed()) {
 				this.connection.close();

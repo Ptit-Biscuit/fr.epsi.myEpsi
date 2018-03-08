@@ -15,10 +15,14 @@
         <img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
 
         <div>
-            Welcome <%= pageContext.getSession().getServletContext().getAttribute("userLogin") %> !!
+            Bienvenue <%= pageContext.getRequest().getParameter("userMail") %> !!
         </div>
 
         <br />
+
+        <a href="/disconnect">Déconnexion</a>
+
+        <br/>
 
         <div>
             <table>

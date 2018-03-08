@@ -1,6 +1,7 @@
 package fr.epsi.myEpsi.controlers.servlets;
 
 import fr.epsi.myEpsi.models.beans.User;
+import fr.epsi.myEpsi.models.beans.UserDefault;
 import fr.epsi.myEpsi.models.forms.SubscribeForm;
 
 import javax.servlet.ServletException;
@@ -29,10 +30,10 @@ public class SubscribeServlet extends GenericServlet {
 		// try register user
 		User user = SubscribeForm.registerUser(request);
 
-		if (user != null) {
-			// store user in context and forward to welcome servlet
-			request.getSession().setAttribute("userLogin", user.getMail());
-			request.getRequestDispatcher("/welcome").forward(request, response);
+		if (!(user instanceof UserDefault)) {
+			// redirect to welcome servlet
+			request.getSession().setAttribute("user", user);
+			response.sendRedirect("/welcome?userMail=" + user.getMail());
 		} else {
 			// refresh page and show error
 			request.setAttribute("userAlreadyExists", true);

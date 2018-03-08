@@ -3,6 +3,7 @@ package fr.epsi.myEpsi.controlers.database.implementations;
 import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.models.beans.User;
+import fr.epsi.myEpsi.models.beans.UserDefault;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +53,7 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 
 	@Override
 	public User find(String mail) throws DaoException {
-		User user = null;
+		User user = new UserDefault();
 		String s = "SELECT * FROM users WHERE mail = ?;";
 
 		if (mail == null || mail.trim().isEmpty())

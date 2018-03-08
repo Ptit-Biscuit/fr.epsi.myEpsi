@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Servlet for
+ * Servlet for handling ads without connection
  */
 @WebServlet(name = "AdServlet", urlPatterns = "/ads")
 public class AdServlet extends GenericServlet {
@@ -21,16 +21,19 @@ public class AdServlet extends GenericServlet {
 		IAdDao adDao = ((IAdDao) request.getServletContext().getAttribute("adDao"));
 		List<Ad> ads;
 
-		if (request.getParameter("userMail") != null) {
-			ads = adDao.getUserAds(request.getParameter("userMail"));
-		} else if (request.getParameter("id") != null) {
+		String userMail = request.getParameter("userMail");
+		String id = request.getParameter("id");
+
+		if (userMail != null) {
+			ads = adDao.getUserAds(userMail);
+		} else if (id != null) {
 			ads = new ArrayList<>();
-			ads.add(adDao.getAd(request.getParameter("id")));
+			ads.add(adDao.getAd(id));
 		} else {
 			ads = adDao.getAllAds();
 		}
 
 		request.setAttribute("ads", ads);
-		request.getRequestDispatcher("welcome.jsp").forward(request, response);
+		request.getRequestDispatcher("/ads.jsp").forward(request, response);
 	}
 }

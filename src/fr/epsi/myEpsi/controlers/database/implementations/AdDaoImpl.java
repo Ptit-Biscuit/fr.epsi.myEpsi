@@ -3,6 +3,7 @@ package fr.epsi.myEpsi.controlers.database.implementations;
 import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.models.beans.Ad;
+import fr.epsi.myEpsi.models.beans.AdDefault;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,11 +50,11 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 
 	@Override
 	public Ad getAd(String id) throws DaoException {
-		Ad ad = new Ad();
+		Ad ad = new AdDefault();
 		String s = "SELECT * FROM ads WHERE id = ?;";
 
 		if (!this.connectionAlive())
-			return null;
+			return ad;
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ps.setString(1, id);
@@ -83,7 +84,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		String s = "SELECT * FROM ads;";
 
 		if (!this.connectionAlive())
-			return null;
+			return ads;
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ResultSet rs = ps.executeQuery();
@@ -104,10 +105,10 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		String s = "SELECT * FROM ads WHERE seller = ?;";
 
 		if (userMail == null)
-			return null;
+			return ads;
 
 		if (!this.connectionAlive())
-			return null;
+			return ads;
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ps.setString(1, userMail);
