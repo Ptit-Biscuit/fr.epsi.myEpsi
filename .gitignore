@@ -2,4 +2,9 @@
 .idea
 /out
 *.iml
-libs/Project server/
+libs/Project server/*.bat
+libs/Project server/*.lck
+libs/Project server/*.log
+libs/Project server/*.properties
+libs/Project server/*.script
+libs/Project server/*.tmp
