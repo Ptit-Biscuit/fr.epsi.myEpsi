@@ -2,10 +2,11 @@ package fr.epsi.myEpsi.controlers.listeners;
 
 import fr.epsi.myEpsi.ApplicationStartup;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
+import fr.epsi.myEpsi.controlers.jmx.ConsoleMBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.management.MBeanServer;
+import javax.management.*;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -38,6 +39,35 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 			You can initialize servlet context related data here. */
 
 		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+		//ICI MBean
+		ObjectName name = null;
+		try {
+			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=IConsoleMBean");
+
+			ConsoleMBean mbean = new ConsoleMBean();
+
+			mbs.registerMBean(mbean, name);
+
+			System.out.println("Lancement ...");
+			while (true) {
+
+				Thread.sleep(1000);
+				mbean.setValeur(mbean.getValeur() + 1);
+			}
+		} catch (MalformedObjectNameException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (InstanceAlreadyExistsException e) {
+			e.printStackTrace();
+		} catch (MBeanRegistrationException e) {
+			e.printStackTrace();
+		} catch (NotCompliantMBeanException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+		}
+
+
 
 		logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte initialisé");
 	}
