@@ -5,8 +5,7 @@ package fr.epsi.myEpsi.models;
  */
 public enum EStatus {
 	TEMPORARY,
-	VALIDATED,
+	VALID,
 	SOLD,
-	CANCEL,
-	DELETED,
+	DELETE,
 }

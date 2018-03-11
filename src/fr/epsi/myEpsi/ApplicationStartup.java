@@ -16,26 +16,14 @@ import java.util.TimerTask;
  */
 public class ApplicationStartup {
 	/**
-	 * Application initialized
-	 */
-	private static boolean isInitialized = false;
-	/**
 	 * Logger
 	 */
 	private final Logger logger = LogManager.getLogger(ApplicationStartup.class);
+
 	/**
 	 * Timer for DAO initialization
 	 */
 	private Timer daoInitTimer = new Timer("DAO init timer");
-
-	/**
-	 * Getter application initialized
-	 *
-	 * @return <code>true</code> if application is initialized, <code>false</code> otherwise
-	 */
-	public static boolean isInitialized() {
-		return isInitialized;
-	}
 
 	/**
 	 * Initialize DAO
@@ -59,7 +47,8 @@ public class ApplicationStartup {
 						// set ad DAO in context
 						sessionEvent.getSession().getServletContext().setAttribute("adDao", adDao);
 
-						isInitialized = true;
+						// session is initialized
+						sessionEvent.getSession().setAttribute("isInitialized", true);
 
 						// cancel this timer : dao initialisation is done
 						daoInitTimer.cancel();

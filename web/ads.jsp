@@ -3,42 +3,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-<head>
-    <meta charset="UTF-8"/>
+    <%@ include file="header.jsp"%>
 
-    <title>LeBonKoinKoin</title>
+    <body>
+        <div>
+            Bienvenue en tant qu'invité !!
+        </div>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-</head>
+        <br/>
 
-<body>
-<div>
-    Bienvenue en tant qu'invité !!
-</div>
+        <div>
+            <table>
+                <th>
+                <td>Titre</td>
+                <td>Status</td>
+                <td>Description</td>
+                <td>Vendeur</td>
+                <td>Prix</td>
+                </th>
 
-<br/>
+                <% for (Ad ad : ((List<Ad>) pageContext.getRequest().getAttribute("ads"))) {
+                    out.println("<tr>");
 
-<div>
-    <table>
-        <th>
-        <td>Titre</td>
-        <td>Status</td>
-        <td>Description</td>
-        <td>Vendeur</td>
-        <td>Prix</td>
-        </th>
-        <% for (Ad ad : ((List<Ad>) pageContext.getRequest().getAttribute("ads"))) {
-            out.println("<tr>");
+                    out.println("<td>" + ad.getTitle() + "</td>");
+                    out.println("<td>" + ad.getStatus() + "</td>");
+                    out.println("<td>" + ad.getDescription() + "</td>");
+                    out.println("<td>" + ad.getSeller() + "</td>");
+                    out.println("<td>" + ad.getPrice() + "</td>");
 
-            out.println("<td>" + ad.getTitle() + "</td>");
-            out.println("<td>" + ad.getStatus() + "</td>");
-            out.println("<td>" + ad.getDescription() + "</td>");
-            out.println("<td>" + ad.getSeller() + "</td>");
-            out.println("<td>" + ad.getPrice() + "</td>");
-
-            out.println("</tr>");
-        } %>
-    </table>
-</div>
-</body>
+                    out.println("</tr>");
+                } %>
+            </table>
+        </div>
+    </body>
 </html>

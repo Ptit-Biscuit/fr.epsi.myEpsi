@@ -3,13 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-    <head>
-        <meta charset="UTF-8"/>
-
-        <title>LeBonKoinKoin</title>
-
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    </head>
+    <%@ include file="header.jsp" %>
 
     <body>
         <img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
@@ -23,6 +17,8 @@
         <a href="/disconnect">Déconnexion</a>
 
         <br/>
+
+        <a href="/createAd">Créer une annonce</a>
 
         <div>
             <table>

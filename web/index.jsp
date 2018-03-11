@@ -1,26 +1,10 @@
-<%@ page import="fr.epsi.myEpsi.ApplicationStartup" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%
-    boolean init = ApplicationStartup.isInitialized();
-%>
-
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <% if(!init) { %>
-            <meta http-equiv="refresh" content="2, URL=index.jsp" />
-        <% } %>
-
-        <title>LeBonKoinKoin</title>
-
-        <%-- TODO add a favicon --%>
-
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-    </head>
+    <%@ include file="header.jsp" %>
 
     <body>
-        <% if(!init) { %>
+        <% if(!(boolean) pageContext.getSession().getAttribute("isInitialized")) { %>
             <div class="sk-wave">
                 <div class="sk-rect sk-rect1"></div>
                 <div class="sk-rect sk-rect2"></div>
@@ -33,7 +17,7 @@
                 Chargement en cours
             </div>
         <% } else { %>
-            <form class="form" id="login" method="post" action="/connection">
+            <form class="form" id="login" method="post" action="${pageContext.request.contextPath}/connection">
                 <h1>Connexion</h1>
 
                 <fieldset class="inputs">
@@ -45,7 +29,7 @@
                     <input type="submit" id="submit" value="Valider" />
                     <input type="reset" id="reset" value="Annuler" />
 
-                    <a href="/subscribe">Inscription</a>
+                    <a href="${pageContext.request.contextPath}/subscribe">Inscription</a>
                 </fieldset>
             </form>
         <% } %>

@@ -1,13 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-    <head>
-        <meta charset="UTF-8">
-
-        <title>LeBonKoinKoin</title>
-
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
+    <%@ include file="header.jsp" %>
 
     <body>
         <% if((Boolean) pageContext.getRequest().getAttribute("userAlreadyExists")) { %>
@@ -16,7 +10,7 @@
             </div>
         <% } %>
 
-        <form class="form" id="subscribe" method="post" action="/subscribe">
+        <form class="form" id="subscribe" method="post" action="${pageContext.request.contextPath}/subscribe">
             <h1>Inscription</h1>
 
             <fieldset class="inputs">
@@ -29,7 +23,7 @@
                 <input type="submit" id="submit" value="Valider" />
 
                 <button type="reset" id="back">
-                    <a href="index.jsp">Retour</a>
+                    <a href="${pageContext.request.contextPath}/index.jsp">Retour</a>
                 </button>
             </fieldset>
         </form>

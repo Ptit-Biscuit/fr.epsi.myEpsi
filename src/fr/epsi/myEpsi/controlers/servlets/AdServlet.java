@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Servlet for handling ads without connection
  */
-@WebServlet(name = "AdServlet", urlPatterns = "/ads")
+@WebServlet(name = "Ad", urlPatterns = "/ads")
 public class AdServlet extends GenericServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -55,6 +55,8 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 		// Session is created
 		logger.info("Session créée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
 
+		se.getSession().setAttribute("isInitialized", false);
+
 		ApplicationStartup startup = new ApplicationStartup();
 		startup.initDao(se);
 	}
