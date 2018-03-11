@@ -1,7 +1,5 @@
 package fr.epsi.myEpsi.controlers.database.interfaces;
 
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
-
 /**
  * Base DAO
  */
@@ -17,8 +15,6 @@ public interface IDao {
 
 	/**
 	 * Close the connection with database
-	 *
-	 * @throws DaoException if error occurs
 	 */
-	void closeConnection() throws DaoException;
+	void closeConnection();
 }

@@ -1,6 +1,5 @@
 package fr.epsi.myEpsi.models.forms;
 
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;
@@ -37,14 +36,9 @@ public class SubscribeForm {
 		user.setMail(mail);
 		user.setPassword(HashUtil.hashPassword(password));
 
-		try {
-			if (((IUserDao) request.getServletContext().getAttribute("userDao")).create(user))
-				return user;
-			else {
-				return new UserDefault();
-			}
-		} catch (DaoException e) {
+		if (((IUserDao) request.getServletContext().getAttribute("userDao")).create(user))
+			return user;
+		else
 			return new UserDefault();
-		}
 	}
 }

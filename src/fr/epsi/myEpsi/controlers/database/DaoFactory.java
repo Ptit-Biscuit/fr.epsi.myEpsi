@@ -1,11 +1,11 @@
 package fr.epsi.myEpsi.controlers.database;
 
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoConfigurationException;
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.implementations.AdDaoImpl;
 import fr.epsi.myEpsi.controlers.database.implementations.UserDaoImpl;
 import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +18,11 @@ import java.util.Properties;
  * Database factory pattern
  */
 public class DaoFactory {
+	/**
+	 * Logger
+	 */
+	private static final Logger LOGGER = LogManager.getLogger(DaoFactory.class);
+
 	/**
 	 * Driver property field
 	 */
@@ -80,38 +85,37 @@ public class DaoFactory {
 	 * Retrieve connection's informations and load driver
 	 *
 	 * @return DAO instance
-	 * @throws DaoConfigurationException if error occurs
 	 */
-	public static DaoFactory getInstance() throws DaoConfigurationException {
+	public static DaoFactory getInstance() {
 		Properties properties = new Properties();
-		String driver;
-		String databaseName;
-		String url;
-		String user;
-		String password;
+		String driver = "";
+		String databaseName = "";
+		String url = "";
+		String user = "";
+		String password = "";
 
 		// Retrieve DAO's properties file
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream daoPropertiesFile = classLoader.getResourceAsStream("dao.properties");
 
 		if (daoPropertiesFile == null)
-			throw new DaoConfigurationException("Le fichier \"dao.properties\" est introuvable.");
+			LOGGER.error("Le fichier \"dao.properties\" est introuvable.");
 
 		try {
 			properties.load(daoPropertiesFile);
 			driver = properties.getProperty(PROPERTY_DRIVER);
 			databaseName = properties.getProperty(PROPERTY_DATABASE_NAME);
-			url = properties.getProperty(PROPERTY_URL) + ":" + properties.getProperty(PROPERTY_PORT) + "/" + (databaseName != null ? databaseName : "");
+			url = properties.getProperty(PROPERTY_URL) + ":" + properties.getProperty(PROPERTY_PORT) + "/" + (!databaseName.isEmpty() ? databaseName : "");
 			user = properties.getProperty(PROPERTY_USER);
 			password = properties.getProperty(PROPERTY_PASSWORD);
 		} catch (IOException e) {
-			throw new DaoConfigurationException("Impossible de charger le fichier \"dao.properties\"", e);
+			LOGGER.error("Impossible de charger le fichier \"dao.properties\"", e);
 		}
 
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			throw new DaoConfigurationException("Le driver est introuvable", e);
+			LOGGER.error("Le driver est introuvable", e);
 		}
 
 		return new DaoFactory(url, user, password);
@@ -131,27 +135,19 @@ public class DaoFactory {
 	 * Getter of user DAO
 	 *
 	 * @return User DAO
-	 * @throws DaoException if error occurs
+	 * @throws SQLException if error occurs
 	 */
-	public IUserDao getUserDao() throws DaoException {
-		try {
-			return new UserDaoImpl(this.getConnection());
-		} catch (SQLException e) {
-			throw new DaoException("La connexion avec la BDD est impossible");
-		}
+	public IUserDao getUserDao() throws SQLException {
+		return new UserDaoImpl(this.getConnection());
 	}
 
 	/**
 	 * Getter of ad DAO
 	 *
 	 * @return Ad DAO
-	 * @throws DaoException if error occurs
+	 * @throws SQLException if error occurs
 	 */
-	public IAdDao getAdDao() throws DaoException {
-		try {
-			return new AdDaoImpl(this.getConnection());
-		} catch (SQLException e) {
-			throw new DaoException("La connexion avec la BDD est impossible");
-		}
+	public IAdDao getAdDao() throws SQLException {
+		return new AdDaoImpl(this.getConnection());
 	}
 }

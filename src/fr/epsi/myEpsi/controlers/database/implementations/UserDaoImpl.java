@@ -1,9 +1,10 @@
 package fr.epsi.myEpsi.controlers.database.implementations;
 
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.models.beans.User;
 import fr.epsi.myEpsi.models.beans.UserDefault;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,10 @@ import java.sql.SQLException;
  * User DAO implementation
  */
 public class UserDaoImpl extends DaoImpl implements IUserDao {
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
 	/**
 	 * Constructor
@@ -25,7 +30,7 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 	}
 
 	@Override
-	public boolean create(User user) throws DaoException {
+	public boolean create(User user) {
 		String s = "INSERT INTO users (mail, pass) VALUES(?, ?);";
 		boolean created = false;
 
@@ -45,14 +50,14 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 
 			created = true;
 		} catch (SQLException e) {
-			throw new DaoException("Impossible de créer l'utilisateur " + user.getMail(), e);
+			logger.error("Impossible de créer l'utilisateur " + user.getMail(), e);
 		}
 
 		return created;
 	}
 
 	@Override
-	public User find(String mail) throws DaoException {
+	public User find(String mail) {
 		User user = new UserDefault();
 		String s = "SELECT * FROM users WHERE mail = ?;";
 
@@ -73,7 +78,7 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 				user.setSubsciption(rs.getTimestamp("subscription"));
 			}
 		} catch (SQLException e) {
-			throw new DaoException("Impossible de chercher l'utilisateur " + mail, e);
+			logger.error("Impossible de chercher l'utilisateur " + mail, e);
 		}
 
 		return user;

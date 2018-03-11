@@ -1,9 +1,10 @@
 package fr.epsi.myEpsi.controlers.database.implementations;
 
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.models.beans.Ad;
 import fr.epsi.myEpsi.models.beans.AdDefault;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +17,10 @@ import java.util.List;
  * Ad DAO implementation
  */
 public class AdDaoImpl extends DaoImpl implements IAdDao {
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(AdDaoImpl.class);
 
 	/**
 	 * Constructor
@@ -49,7 +54,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	}
 
 	@Override
-	public Ad getAd(String id) throws DaoException {
+	public Ad getAd(String id) {
 		Ad ad = new AdDefault();
 		String s = "SELECT * FROM ads WHERE id = ?;";
 
@@ -72,14 +77,14 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 				ad.setModificationAt(rs.getDate("modificationAt"));
 			}
 		} catch (SQLException e) {
-			throw new DaoException("Impossible de récupérer l'annonce n°" + id, e);
+			logger.error("Impossible de récupérer l'annonce n°" + id, e);
 		}
 
 		return ad;
 	}
 
 	@Override
-	public List<Ad> getAllAds() throws DaoException {
+	public List<Ad> getAllAds() {
 		List<Ad> ads = new ArrayList<>();
 		String s = "SELECT * FROM ads;";
 
@@ -93,14 +98,14 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 				populate(ads, rs);
 			}
 		} catch (SQLException e) {
-			throw new DaoException("Impossible de récupérer toutes les annonces", e);
+			logger.error("Impossible de récupérer toutes les annonces", e);
 		}
 
 		return ads;
 	}
 
 	@Override
-	public List<Ad> getUserAds(String userMail) throws DaoException {
+	public List<Ad> getUserAds(String userMail) {
 		List<Ad> ads = new ArrayList<>();
 		String s = "SELECT * FROM ads WHERE seller = ?;";
 
@@ -118,7 +123,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 				populate(ads, rs);
 			}
 		} catch (SQLException e) {
-			throw new DaoException("Impossible de récupérer les annonces de " + userMail, e);
+			logger.error("Impossible de récupérer les annonces de " + userMail, e);
 		}
 
 		return ads;

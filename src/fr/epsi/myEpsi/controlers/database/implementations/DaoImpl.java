@@ -1,7 +1,8 @@
 package fr.epsi.myEpsi.controlers.database.implementations;
 
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,6 +11,11 @@ import java.sql.SQLException;
  * Base DAO implementation
  */
 public class DaoImpl implements IDao {
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(DaoImpl.class);
+
 	/**
 	 * Connection
 	 */
@@ -32,7 +38,7 @@ public class DaoImpl implements IDao {
 			if (!this.connection.isClosed())
 				alive = true;
 		} catch (SQLException e) {
-			throw new DaoException("Connexion avec la BDD fermée", e);
+			logger.error("Connexion avec la BDD fermée", e);
 		}
 
 		return alive;
@@ -45,7 +51,7 @@ public class DaoImpl implements IDao {
 				this.connection.close();
 			}
 		} catch (SQLException e) {
-			throw new DaoException("Impossible de fermer la connexion", e);
+			logger.error("Impossible de fermer la connexion", e);
 		}
 	}
 }

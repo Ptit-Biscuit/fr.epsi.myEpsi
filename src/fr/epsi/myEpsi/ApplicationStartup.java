@@ -1,13 +1,13 @@
 package fr.epsi.myEpsi;
 
 import fr.epsi.myEpsi.controlers.database.DaoFactory;
-import fr.epsi.myEpsi.controlers.database.exceptions.DaoException;
 import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpSessionEvent;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,8 +56,8 @@ public class ApplicationStartup {
 
 						logger.info("DAO initialisée");
 					}
-				} catch (DaoException e) {
-					logger.error("Impossible de se connecter à la BDD");
+				} catch (SQLException e) {
+					logger.error("Impossible de se connecter à la BDD", e);
 				}
 			}
 		}, 0, 1500);
