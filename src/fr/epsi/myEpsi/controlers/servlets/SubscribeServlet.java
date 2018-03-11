@@ -31,9 +31,9 @@ public class SubscribeServlet extends GenericServlet {
 		User user = SubscribeForm.registerUser(request);
 
 		if (!(user instanceof UserDefault)) {
-			// redirect to welcome servlet
+			// register user in session and redirect to welcome servlet
 			request.getSession().setAttribute("user", user);
-			response.sendRedirect("/welcome?userMail=" + user.getMail());
+			response.sendRedirect("/welcome");
 		} else {
 			// refresh page and show error
 			request.setAttribute("userAlreadyExists", true);

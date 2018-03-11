@@ -9,6 +9,7 @@ import javax.management.MBeanServer;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.lang.management.ManagementFactory;
@@ -54,6 +55,7 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 	public void sessionCreated(HttpSessionEvent se) {
 		// Session is created
 		logger.info("Session créée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
+		logger.debug("Session id : " + se.getSession().getId());
 
 		se.getSession().setAttribute("isInitialized", false);
 
@@ -64,19 +66,22 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
 		// Session is destroyed
-		if (se.getSession().getAttribute("user") != null)
-			se.getSession().removeAttribute("user");
+		HttpSession session = se.getSession();
 
-		if (se.getSession().getAttribute("userDao") != null) {
-			((IUserDao) se.getSession().getAttribute("userDao")).closeConnection();
-			se.getSession().removeAttribute("userDao");
+		if (session.getAttribute("user") != null)
+			session.removeAttribute("user");
+
+		if (session.getAttribute("userDao") != null) {
+			((IUserDao) session.getAttribute("userDao")).closeConnection();
+			session.removeAttribute("userDao");
 		}
 
-		if (se.getSession().getAttribute("adDao") != null) {
-			((IUserDao) se.getSession().getAttribute("adDao")).closeConnection();
-			se.getSession().removeAttribute("adDao");
+		if (session.getAttribute("adDao") != null) {
+			((IUserDao) session.getAttribute("adDao")).closeConnection();
+			session.removeAttribute("adDao");
 		}
 
+		logger.debug("Session id : " + session.getId());
 		logger.info("Session terminée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
 	}
 }

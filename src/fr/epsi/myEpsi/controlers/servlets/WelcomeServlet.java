@@ -17,17 +17,18 @@ import java.util.stream.Collectors;
  */
 @WebServlet(name = "Welcome", urlPatterns = "/welcome")
 public class WelcomeServlet extends GenericServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 
 		if (request.getSession().getAttribute("user") == null) {
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			response.sendRedirect("/index.jsp");
 			return;
 		}
 
 		// retrieve all ads with VALID status
-		List<Ad> ads = ((IAdDao) request.getServletContext().getAttribute("adDao")).getAllAds()
+		List<Ad> ads = ((IAdDao) request.getSession().getAttribute("adDao")).getAllAds()
 				.stream().filter(ad -> EStatus.VALID.ordinal() == ad.getStatus()).collect(Collectors.toList());
 
 		request.setAttribute("ads", ads);

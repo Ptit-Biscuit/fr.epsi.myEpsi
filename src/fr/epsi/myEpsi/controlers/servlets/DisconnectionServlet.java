@@ -10,17 +10,19 @@ import java.io.IOException;
 /**
  * Servlet for disconnection
  */
-@WebServlet(name = "Disconnection", urlPatterns = "/disconnect")
+@WebServlet(name = "Logout", urlPatterns = "/logout")
 public class DisconnectionServlet extends GenericServlet {
+
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		super.doGet(request, response);
 
 		// Retrieve and destroy actual session
 		HttpSession session = request.getSession();
+		session.removeAttribute("user");
 		session.invalidate();
 
 		// Return to index page
-		this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+		response.sendRedirect("/index.html");
 	}
 }

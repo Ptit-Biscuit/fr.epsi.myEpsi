@@ -1,6 +1,7 @@
 package fr.epsi.myEpsi.controlers.database.implementations;
 
 import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
+import fr.epsi.myEpsi.models.EStatus;
 import fr.epsi.myEpsi.models.beans.Ad;
 import fr.epsi.myEpsi.models.beans.AdDefault;
 import org.apache.logging.log4j.LogManager;
@@ -51,6 +52,33 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		ad.setModificationAt(result.getDate("modificationAt"));
 
 		list.add(ad);
+	}
+
+	@Override
+	public boolean save(Ad ad) {
+		boolean saved = false;
+		String s = "INSERT INTO ads (title, description, status, seller, price, viewNumber) VALUES (?, ?, ?, ?, ?, ?);";
+
+		if (ad == null || ad instanceof AdDefault)
+			return saved;
+
+		if (!this.connectionAlive())
+			return saved;
+
+		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
+			ps.setString(1, ad.getTitle());
+			ps.setString(2, ad.getDescription());
+			ps.setInt(3, EStatus.TEMPORARY.ordinal());
+			ps.setString(4, ad.getSeller());
+			ps.setFloat(5, ad.getPrice());
+			ps.setInt(6, 0);
+
+			saved = ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			logger.error("Impossible de sauvegarder l'annonce " + ad.getTitle(), e);
+		}
+
+		return saved;
 	}
 
 	@Override

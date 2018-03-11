@@ -24,9 +24,9 @@ public class ConnectionServlet extends GenericServlet {
 		User user = LoginForm.loginUser(request);
 
 		if (!(user instanceof UserDefault)) {
-			// redirect to welcome servlet
+			// register user in session and redirect to welcome servlet
 			request.getSession().setAttribute("user", user);
-			response.sendRedirect("/welcome?userMail=" + user.getMail());
+			response.sendRedirect("/welcome");
 		} else {
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}

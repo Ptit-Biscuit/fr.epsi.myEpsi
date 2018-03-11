@@ -15,10 +15,10 @@ import java.util.List;
  * Servlet for handling ads without connection
  */
 @WebServlet(name = "Ad", urlPatterns = "/ads")
-public class AdServlet extends GenericServlet {
+public class GetAdServlet extends GenericServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IAdDao adDao = ((IAdDao) request.getServletContext().getAttribute("adDao"));
+		IAdDao adDao = ((IAdDao) request.getSession().getAttribute("adDao"));
 		List<Ad> ads;
 
 		String userMail = request.getParameter("userMail");
@@ -34,6 +34,6 @@ public class AdServlet extends GenericServlet {
 		}
 
 		request.setAttribute("ads", ads);
-		request.getRequestDispatcher("/ads.jsp").forward(request, response);
+		request.getRequestDispatcher("/getAd.jsp").forward(request, response);
 	}
 }

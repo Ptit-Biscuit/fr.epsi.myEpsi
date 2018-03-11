@@ -26,7 +26,7 @@ public class SubscribeForm {
 		String password = ServletUtil.retrieveValue(request, "password");
 		String confirm = ServletUtil.retrieveValue(request, "confirm");
 
-		if (mail == null || password == null || confirm == null)
+		if (mail.isEmpty() || password.isEmpty() || confirm.isEmpty())
 			return new UserDefault();
 
 		if (!password.equals(confirm))
@@ -36,7 +36,7 @@ public class SubscribeForm {
 		user.setMail(mail);
 		user.setPassword(HashUtil.hashPassword(password));
 
-		if (((IUserDao) request.getServletContext().getAttribute("userDao")).create(user))
+		if (((IUserDao) request.getSession().getAttribute("userDao")).create(user))
 			return user;
 		else
 			return new UserDefault();

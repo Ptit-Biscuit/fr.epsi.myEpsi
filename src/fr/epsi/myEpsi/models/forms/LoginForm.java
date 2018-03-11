@@ -25,11 +25,11 @@ public class LoginForm {
 		String mail = ServletUtil.retrieveValue(request, "mail");
 		String password = ServletUtil.retrieveValue(request, "password");
 
-		if (mail == null || password == null)
+		if (mail.isEmpty() || password.isEmpty())
 			return new UserDefault();
 
 		// retrieve user from database
-		User user = ((UserDaoImpl) request.getServletContext().getAttribute("userDao")).find(mail);
+		User user = ((UserDaoImpl) request.getSession().getAttribute("userDao")).find(mail);
 
 		if (user.getPassword().equals(HashUtil.hashPassword(password)))
 			return user;

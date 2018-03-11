@@ -10,6 +10,14 @@ import java.util.List;
 public interface IAdDao extends IDao {
 
 	/**
+	 * Save an ad in database
+	 *
+	 * @param ad Ad to save
+	 * @return <code>True</code> if save, <code>false</code> otherwise
+	 */
+	boolean save(Ad ad);
+
+	/**
 	 * Getter of all the ads in database
 	 *
 	 * @return A <code>List</code> of all the ads
@@ -20,7 +28,8 @@ public interface IAdDao extends IDao {
 	 * Getter of an ad by its id
 	 *
 	 * @param id Ad's id
-	 * @return The ad found or <code>null</code>
+	 * @return The ad found or <code>AdDefault</code> otherwise
+	 * @see fr.epsi.myEpsi.models.beans.AdDefault
 	 */
 	Ad getAd(String id);
 

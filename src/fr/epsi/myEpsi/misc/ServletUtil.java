@@ -15,10 +15,13 @@ public class ServletUtil {
 	 * @return The parameter value or <code>null</code>
 	 */
 	public static String retrieveValue(HttpServletRequest request, String parameterName) {
+		if (parameterName == null || parameterName.isEmpty())
+			return "";
+
 		String value = request.getParameter(parameterName);
 
 		if (value == null || value.trim().length() == 0) {
-			return null;
+			return "";
 		} else {
 			return value.trim();
 		}

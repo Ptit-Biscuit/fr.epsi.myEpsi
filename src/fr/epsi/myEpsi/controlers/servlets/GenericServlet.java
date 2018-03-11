@@ -16,16 +16,16 @@ public class GenericServlet extends HttpServlet {
 	 * Public constructor is required by servlet spec
 	 */
 	public GenericServlet() {
-		LogManager.getLogger(this.getClass()).trace("Arrivée dans : " + this.getClass().getName());
+		LogManager.getLogger(this.getClass()).trace("Arrivée dans " + this.getClass().getSimpleName());
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LogManager.getLogger(this.getClass()).trace("Exécution doGet() : " + this.getClass().getName());
+		LogManager.getLogger(this.getClass()).trace("Exécution doGet() " + this.getClass().getSimpleName());
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LogManager.getLogger(this.getClass()).trace("Exécution doPost() : " + this.getClass().getName());
+		LogManager.getLogger(this.getClass()).trace("Exécution doPost() " + this.getClass().getSimpleName());
 	}
 }

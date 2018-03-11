@@ -1,24 +1,29 @@
 <%@ page import="fr.epsi.myEpsi.models.beans.Ad" %>
 <%@ page import="java.util.List" %>
+<%@ page import="fr.epsi.myEpsi.models.beans.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
     <%@ include file="header.jsp" %>
 
     <body>
+        <% if (pageContext.getAttribute("error") != null)
+            out.println("<div class=\"error\">" + pageContext.getAttribute("error") + "</div>");
+        %>
+
         <img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
 
         <div>
-            Bienvenue <%= pageContext.getRequest().getParameter("userMail") %> !!
+            Bienvenue <%= ((User) pageContext.getSession().getAttribute("user")).getMail() %> !!
         </div>
 
         <br />
 
-        <a href="/disconnect">Déconnexion</a>
+        <a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
 
         <br/>
 
-        <a href="/createAd">Créer une annonce</a>
+        <a href="${pageContext.request.contextPath}/createAd">Créer une annonce</a>
 
         <div>
             <table>

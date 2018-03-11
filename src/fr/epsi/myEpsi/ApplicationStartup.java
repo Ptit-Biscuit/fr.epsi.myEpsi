@@ -42,10 +42,10 @@ public class ApplicationStartup {
 
 					if (userDao.connectionAlive() && adDao.connectionAlive()) {
 						// set user DAO in context
-						sessionEvent.getSession().getServletContext().setAttribute("userDao", userDao);
+						sessionEvent.getSession().setAttribute("userDao", userDao);
 
 						// set ad DAO in context
-						sessionEvent.getSession().getServletContext().setAttribute("adDao", adDao);
+						sessionEvent.getSession().setAttribute("adDao", adDao);
 
 						// session is initialized
 						sessionEvent.getSession().setAttribute("isInitialized", true);
