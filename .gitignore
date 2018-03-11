@@ -1,7 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
 /out
-*.iml
 libs/Project server/*.bat
 libs/Project server/*.lck
 libs/Project server/*.log
