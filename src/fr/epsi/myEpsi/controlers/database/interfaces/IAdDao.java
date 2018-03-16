@@ -12,10 +12,18 @@ public interface IAdDao extends IDao {
 	/**
 	 * Save an ad in database
 	 *
-	 * @param ad Ad to save
-	 * @return <code>True</code> if save, <code>false</code> otherwise
+	 * @param ad Ad to saveAd
+	 * @return <code>True</code> if ad has been saved, <code>false</code> otherwise
 	 */
-	boolean save(Ad ad);
+	boolean saveAd(Ad ad);
+
+	/**
+	 * Delete an ad in database
+	 *
+	 * @param adId Id of the ad to delete
+	 * @return <code>True</code> if ad has been deleted, <code>false</code> otherwise
+	 */
+	boolean deleteAd(int adId);
 
 	/**
 	 * Getter of all the ads in database

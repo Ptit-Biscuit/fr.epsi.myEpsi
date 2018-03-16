@@ -1,10 +1,12 @@
 <%@ page import="fr.epsi.myEpsi.models.beans.Ad" %>
-<%@ page import="java.util.List" %>
 <%@ page import="fr.epsi.myEpsi.models.beans.User" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
+<head>
     <%@ include file="header.jsp" %>
+</head>
 
     <body>
         <% if (pageContext.getAttribute("error") != null)
@@ -13,11 +15,13 @@
 
         <img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
 
-        <div>
-            Bienvenue <%= ((User) pageContext.getSession().getAttribute("user")).getMail() %> !!
-        </div>
-
         <br />
+
+        <% if (((User) pageContext.getSession().getAttribute("user")).getMail().contains("@root")) { %>
+        <a href="${pageContext.request.contextPath}/administration">Administration</a>
+
+        <br/>
+        <% } %>
 
         <a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
 

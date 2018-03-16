@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
+<head>
     <%@ include file="header.jsp" %>
+</head>
 
     <body>
         <% if(!(boolean) pageContext.getSession().getAttribute("isInitialized")) { %>
@@ -17,7 +19,7 @@
                 Chargement en cours
             </div>
         <% } else { %>
-            <form class="form" id="login" method="post" action="${pageContext.request.contextPath}/connection">
+        <form class="formDisplay" id="login" method="post" action="${pageContext.request.contextPath}/connection">
                 <h1>Connexion</h1>
 
                 <fieldset class="inputs">

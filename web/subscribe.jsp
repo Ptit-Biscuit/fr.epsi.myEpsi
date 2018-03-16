@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
+<head>
     <%@ include file="header.jsp" %>
+</head>
 
     <body>
         <% if((Boolean) pageContext.getRequest().getAttribute("userAlreadyExists")) { %>
@@ -10,11 +12,12 @@
             </div>
         <% } %>
 
-        <form class="form" id="subscribe" method="post" action="${pageContext.request.contextPath}/subscribe">
+        <form class="formDisplay" id="subscribe" method="post" action="${pageContext.request.contextPath}/subscribe">
             <h1>Inscription</h1>
 
             <fieldset class="inputs">
                 <input id="mail" name="mail" type="email" placeholder="Adresse mail" maxlength="64" autofocus required />
+                <input id="pseudo" name="pseudo" type="text" placeholder="Pseudonyme" maxlength="20"/>
                 <input id="password" name="password" type="password" placeholder="Mot de passe" minlength="8" required />
                 <input id="confirm" name="confirm" type="password" placeholder="Confirmation mot de passe" minlength="8" required />
             </fieldset>

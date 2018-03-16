@@ -23,10 +23,11 @@ public class SubscribeForm {
 	public static User registerUser(HttpServletRequest request) {
 		// retrieve data from subscribe form
 		String mail = ServletUtil.retrieveValue(request, "mail");
+		String pseudo = ServletUtil.retrieveValue(request, "pseudo");
 		String password = ServletUtil.retrieveValue(request, "password");
 		String confirm = ServletUtil.retrieveValue(request, "confirm");
 
-		if (mail.isEmpty() || password.isEmpty() || confirm.isEmpty())
+		if (mail.isEmpty() || mail.contains("@root") || password.isEmpty() || confirm.isEmpty())
 			return new UserDefault();
 
 		if (!password.equals(confirm))
@@ -34,6 +35,7 @@ public class SubscribeForm {
 
 		User user = new User();
 		user.setMail(mail);
+		user.setPseudo(pseudo);
 		user.setPassword(HashUtil.hashPassword(password));
 
 		if (((IUserDao) request.getSession().getAttribute("userDao")).create(user))

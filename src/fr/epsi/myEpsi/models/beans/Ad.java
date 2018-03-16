@@ -26,7 +26,7 @@ public class Ad {
 	/**
 	 * Status
 	 */
-	private Integer status;
+	private EStatus status;
 
 	/**
 	 * Seller
@@ -112,7 +112,7 @@ public class Ad {
 	 *
 	 * @return Status
 	 */
-	public Integer getStatus() {
+	public EStatus getStatus() {
 		return status;
 	}
 
@@ -121,7 +121,7 @@ public class Ad {
 	 *
 	 * @param status New Status
 	 */
-	public void setStatus(Integer status) {
+	public void setStatus(EStatus status) {
 		this.status = status;
 	}
 

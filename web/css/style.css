@@ -84,7 +84,7 @@ html, body {
 
 /* Form display */
 
-.form {
+.formDisplay {
 	background-color: #eee;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#eee));
 	background-image: -webkit-linear-gradient(top, #eee, #eee);
@@ -123,7 +123,7 @@ html, body {
 	0 7px 0 rgba(0, 0, 0, .2);
 }
 
-.form:before {
+.formDisplay:before {
 	content: '';
 	position: absolute;
 	z-index: -1;
@@ -137,7 +137,7 @@ html, body {
 	box-shadow: 0 0 0 1px #eee;
 }
 
-.form h1 {
+.formDisplay h1 {
 	content: '';
 	text-transform: uppercase;
 	text-align: center;
@@ -148,7 +148,7 @@ html, body {
 	position: relative;
 }
 
-.form h1:after, .form h1:before {
+.formDisplay h1:after, .formDisplay h1:before {
 	background-color: #777;
 	content: "";
 	height: 1px;
@@ -157,7 +157,7 @@ html, body {
 	width: 90px;
 }
 
-.form h1:after {
+.formDisplay h1:after {
 	background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#eee));
 	background-image: -webkit-linear-gradient(left, #777, #eee);
 	background-image: -moz-linear-gradient(left, #777, #eee);
@@ -167,7 +167,7 @@ html, body {
 	right: 0;
 }
 
-.form h1:before {
+.formDisplay h1:before {
 	background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#eee));
 	background-image: -webkit-linear-gradient(right, #777, #eee);
 	background-image: -moz-linear-gradient(right, #777, #eee);
@@ -177,17 +177,17 @@ html, body {
 	left: 0;
 }
 
-.form#subscribe {
+.formDisplay#subscribe {
 	height: 280px;
 }
 
-.form#subscribe h1:after, .form#subscribe h1:before {
+.formDisplay#subscribe h1:after, .formDisplay#subscribe h1:before {
 	width: 85px;
 }
 
 /*--------------------*/
 
-.form fieldset {
+.formDisplay fieldset {
 	border: 0;
 	padding: 0;
 	margin: 0;
@@ -195,7 +195,7 @@ html, body {
 
 /*--------------------*/
 
-.form .inputs input {
+.formDisplay .inputs input {
 	background: #fff url(img/login-sprite.png) no-repeat;
 	padding: 15px 15px 15px 30px;
 	margin: 0 0 10px 0;
@@ -209,7 +209,7 @@ html, body {
 	box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #eee;
 }
 
-.form .inputs input:focus {
+.formDisplay .inputs input:focus {
 	background-color: #fff;
 	border-color: #e8c291;
 	outline: none;
@@ -218,21 +218,21 @@ html, body {
 	box-shadow: 0 0 0 1px #e8c291 inset;
 }
 
-.form .inputs #mail {
+.formDisplay .inputs #mail {
 	background-position: 5px -2px !important;
 }
 
-.form .inputs #password, .form .inputs #confirm {
+.formDisplay .inputs #password, .formDisplay .inputs #confirm {
 	background-position: 5px -52px !important;
 }
 
 /*--------------------*/
 
-.form .actions {
+.formDisplay .actions {
 	margin: 25px 0 0 0;
 }
 
-.form .actions #submit {
+.formDisplay .actions #submit {
 	background-color: #27ae60;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#2ecc71), to(#27ae60));
 	background-image: -webkit-linear-gradient(top, #2ecc71, #27ae60);
@@ -262,7 +262,7 @@ html, body {
 	color: #eeeeee;
 }
 
-.form .actions #submit:hover, .form .actions #submit:focus {
+.formDisplay .actions #submit:hover, .formDisplay .actions #submit:focus {
 	background-color: #2ecc71;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#27ae60), to(#2ecc71));
 	background-image: -webkit-linear-gradient(top, #27ae60, #2ecc71);
@@ -272,7 +272,7 @@ html, body {
 	background-image: linear-gradient(top, #27ae60, #2ecc71);
 }
 
-.form .actions #reset, .form .actions #back {
+.formDisplay .actions #reset, .formDisplay .actions #back {
 	background-color: #e67e22;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#f39c12), to(#e67e22));
 	background-image: -webkit-linear-gradient(top, #f39c12, #e67e22);
@@ -303,7 +303,7 @@ html, body {
 	color: #eeeeee;
 }
 
-.form .actions #reset:hover, .form .actions #reset:focus, .form .actions #back:hover, .form .actions #back:focus {
+.formDisplay .actions #reset:hover, .formDisplay .actions #reset:focus, .formDisplay .actions #back:hover, .formDisplay .actions #back:focus {
 	background-color: #f39c12;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#e67e22), to(#f39c12));
 	background-image: -webkit-linear-gradient(top, #e67e22, #f39c12);
@@ -313,7 +313,7 @@ html, body {
 	background-image: linear-gradient(top, #e67e22, #f39c12);
 }
 
-.form .actions #submit:active, .form .actions #reset:active, .form .actions #back:active {
+.formDisplay .actions #submit:active, .formDisplay .actions #reset:active, .formDisplay .actions #back:active {
 	outline: none;
 
 	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
@@ -321,18 +321,18 @@ html, body {
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
 }
 
-.form .actions #submit::-moz-focus-inner, .form .actions #reset::-moz-focus-inner, .form .actions #back::-moz-focus-inner {
+.formDisplay .actions #submit::-moz-focus-inner, .formDisplay .actions #reset::-moz-focus-inner, .formDisplay .actions #back::-moz-focus-inner {
 	border: none;
 }
 
-.form .actions a {
+.formDisplay .actions a {
 	color: #3151A2;
 	float: right;
 	line-height: 35px;
 	margin-left: 10px;
 }
 
-.form .actions #back a {
+.formDisplay .actions #back a {
 	display: inline-block;
 	width: inherit;
 	height: inherit;

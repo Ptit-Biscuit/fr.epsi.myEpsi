@@ -12,6 +12,11 @@ public class User {
 	private String mail;
 
 	/**
+	 * Pseudo
+	 */
+	private String pseudo;
+
+	/**
 	 * Password hash
 	 */
 	private String password;
@@ -37,6 +42,24 @@ public class User {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	/**
+	 * Getter pseudo
+	 *
+	 * @return Pseudo
+	 */
+	public String getPseudo() {
+		return this.pseudo;
+	}
+
+	/**
+	 * Setter pseudo
+	 *
+	 * @param pseudo New pseudo
+	 */
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 
 	/**

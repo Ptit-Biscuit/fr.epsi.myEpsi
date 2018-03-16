@@ -3,7 +3,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-    <%@ include file="header.jsp"%>
+<head>
+    <%@ include file="header.jsp" %>
+</head>
 
     <body>
         <div>

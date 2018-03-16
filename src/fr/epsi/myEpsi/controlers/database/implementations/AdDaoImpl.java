@@ -44,7 +44,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		ad.setId(result.getInt("id"));
 		ad.setTitle(result.getString("title"));
 		ad.setDescription(result.getString("description"));
-		ad.setStatus(result.getInt("status"));
+		ad.setStatus(EStatus.getStatus(result.getInt("status")));
 		ad.setSeller(result.getString("seller"));
 		ad.setPrice(result.getFloat("price"));
 		ad.setSoldAt(result.getDate("soldAt"));
@@ -55,7 +55,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	}
 
 	@Override
-	public boolean save(Ad ad) {
+	public boolean saveAd(Ad ad) {
 		boolean saved = false;
 		String s = "INSERT INTO ads (title, description, status, seller, price, viewNumber) VALUES (?, ?, ?, ?, ?, ?);";
 
@@ -68,17 +68,31 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ps.setString(1, ad.getTitle());
 			ps.setString(2, ad.getDescription());
-			ps.setInt(3, EStatus.TEMPORARY.ordinal());
+			ps.setInt(3, ad.getStatus().ordinal());
 			ps.setString(4, ad.getSeller());
 			ps.setFloat(5, ad.getPrice());
 			ps.setInt(6, 0);
-
 			saved = ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			logger.error("Impossible de sauvegarder l'annonce " + ad.getTitle(), e);
 		}
 
 		return saved;
+	}
+
+	@Override
+	public boolean deleteAd(int adId) {
+		boolean deleted = false;
+		String s = "DELETE FROM ads WHERE id = ?";
+
+		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
+			ps.setInt(1, adId);
+			deleted = ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			logger.error("Impossible de supprimer l'annonce n°" + adId, e);
+		}
+
+		return deleted;
 	}
 
 	@Override
@@ -97,7 +111,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 				ad.setId(rs.getInt("id"));
 				ad.setTitle(rs.getString("title"));
 				ad.setDescription(rs.getString("description"));
-				ad.setStatus(rs.getInt("status"));
+				ad.setStatus(EStatus.getStatus(rs.getInt("status")));
 				ad.setSeller(rs.getString("seller"));
 				ad.setPrice(rs.getFloat("price"));
 				ad.setSoldAt(rs.getDate("soldAt"));

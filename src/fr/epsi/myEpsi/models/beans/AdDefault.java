@@ -1,5 +1,7 @@
 package fr.epsi.myEpsi.models.beans;
 
+import fr.epsi.myEpsi.models.EStatus;
+
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -16,7 +18,7 @@ public class AdDefault extends Ad {
 		this.setId(0);
 		this.setTitle("title");
 		this.setDescription("description");
-		this.setStatus(0);
+		this.setStatus(EStatus.TEMPORARY);
 		this.setSeller("seller");
 		this.setPrice(0f);
 		this.setSoldAt(date);
