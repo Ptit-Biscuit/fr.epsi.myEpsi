@@ -4,7 +4,6 @@ import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;
-import fr.epsi.myEpsi.models.beans.Ad;
 import fr.epsi.myEpsi.models.beans.User;
 import fr.epsi.myEpsi.models.forms.CreateAdForm;
 import fr.epsi.myEpsi.models.forms.SubscribeForm;
@@ -47,24 +46,15 @@ public class AdministrationServlet extends GenericServlet {
 		String adId = ServletUtil.retrieveValue(request, "adId");
 
 		// Create a user
-		if (!userCreation.isEmpty() && Boolean.valueOf(userCreation)) {
-			// try register user
-			User user = SubscribeForm.registerUser(request);
-		}
+		if (!userCreation.isEmpty() && Boolean.valueOf(userCreation))
+			SubscribeForm.registerUser(request);
 
-		// Modify a user
-		if (!userModification.isEmpty() && Boolean.valueOf(userModification)) {
-			// try update user
+		// Update a user
+		if (!userModification.isEmpty() && Boolean.valueOf(userModification))
 			UpdateUserForm.updateUser(request);
-		}
 
 		// Delete a user
-		if (!userDelete.isEmpty() && Boolean.valueOf(userDelete)) {
-			if (mail.isEmpty() || password.isEmpty()) {
-				response.sendRedirect("/administration.jsp");
-				return;
-			}
-
+		if (!userDelete.isEmpty() && Boolean.valueOf(userDelete) && !(mail.isEmpty() || password.isEmpty())) {
 			User user = new User();
 			user.setMail(mail);
 			user.setPassword(HashUtil.hashPassword(password));
@@ -73,20 +63,12 @@ public class AdministrationServlet extends GenericServlet {
 		}
 
 		// Create an ad
-		if (!adCreation.isEmpty() && Boolean.valueOf(adCreation)) {
-			// try register an ad
-			Ad ad = CreateAdForm.createAd(request);
-		}
+		if (!adCreation.isEmpty() && Boolean.valueOf(adCreation))
+			CreateAdForm.createAd(request);
 
 		// Delete an ad
-		if (!adDelete.isEmpty() && Boolean.valueOf(adDelete)) {
-			if (adId.isEmpty()) {
-				response.sendRedirect("/administration.jsp");
-				return;
-			}
-
+		if (!adDelete.isEmpty() && Boolean.valueOf(adDelete) && !adId.isEmpty())
 			((IAdDao) request.getSession().getAttribute("adDao")).deleteAd(Integer.valueOf(adId));
-		}
 
 		response.sendRedirect("/administration.jsp");
 	}

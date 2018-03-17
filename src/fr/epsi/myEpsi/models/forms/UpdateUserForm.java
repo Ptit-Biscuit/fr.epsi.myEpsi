@@ -22,6 +22,7 @@ public class UpdateUserForm {
 		// retrieve data from update user form
 		String oldMail = ServletUtil.retrieveValue(request, "oldMail");
 		String mail = ServletUtil.retrieveValue(request, "mail");
+		String pseudo = ServletUtil.retrieveValue(request, "pseudo");
 		String password = ServletUtil.retrieveValue(request, "password");
 
 		if (oldMail.isEmpty() || mail.isEmpty() || password.isEmpty())
@@ -29,6 +30,7 @@ public class UpdateUserForm {
 
 		User user = new User();
 		user.setMail(mail);
+		user.setPseudo(pseudo);
 		user.setPassword(HashUtil.hashPassword(password));
 
 		return ((IUserDao) request.getSession().getAttribute("userDao")).updateUser(oldMail, user);
