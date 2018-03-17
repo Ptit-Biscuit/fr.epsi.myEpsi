@@ -2,7 +2,6 @@ package fr.epsi.myEpsi.controlers.servlets;
 
 import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
-import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;
 import fr.epsi.myEpsi.models.beans.User;
 import fr.epsi.myEpsi.models.forms.CreateAdForm;
@@ -41,7 +40,6 @@ public class AdministrationServlet extends GenericServlet {
 		String adDelete = ServletUtil.retrieveValue(request, "adDelete");
 
 		String mail = ServletUtil.retrieveValue(request, "mail");
-		String password = ServletUtil.retrieveValue(request, "password");
 
 		String adId = ServletUtil.retrieveValue(request, "adId");
 
@@ -54,10 +52,9 @@ public class AdministrationServlet extends GenericServlet {
 			UpdateUserForm.updateUser(request);
 
 		// Delete a user
-		if (!userDelete.isEmpty() && Boolean.valueOf(userDelete) && !(mail.isEmpty() || password.isEmpty())) {
+		if (!userDelete.isEmpty() && Boolean.valueOf(userDelete) && !mail.isEmpty()) {
 			User user = new User();
 			user.setMail(mail);
-			user.setPassword(HashUtil.hashPassword(password));
 
 			((IUserDao) request.getSession().getAttribute("userDao")).deleteUser(user);
 		}

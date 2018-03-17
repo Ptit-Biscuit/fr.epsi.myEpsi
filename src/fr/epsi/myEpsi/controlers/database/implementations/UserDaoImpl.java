@@ -130,7 +130,7 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 	@Override
 	public boolean deleteUser(User user) {
 		boolean deleted = false;
-		String s = "DELETE FROM users WHERE mail = ? AND pass = ?;";
+		String s = "DELETE FROM users WHERE mail = ?;";
 
 		if (user == null || user instanceof UserDefault)
 			return deleted;
@@ -140,7 +140,6 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ps.setString(1, user.getMail());
-			ps.setString(2, user.getPassword());
 			deleted = ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			logger.error("Impossible de supprimer l'utilisateur " + user.getMail(), e);
