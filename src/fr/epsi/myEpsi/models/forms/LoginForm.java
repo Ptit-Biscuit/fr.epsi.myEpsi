@@ -5,6 +5,7 @@ import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;
 import fr.epsi.myEpsi.models.beans.User;
 import fr.epsi.myEpsi.models.beans.UserDefault;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +34,9 @@ public class LoginForm {
 
 		if (user.getPassword().equals(HashUtil.hashPassword(password)))
 			return user;
-		else
+		else {
+			LogManager.getLogger(LoginForm.class).error(mail + " --> mot de passe incorrect : " + password);
 			return new UserDefault();
+		}
 	}
 }
