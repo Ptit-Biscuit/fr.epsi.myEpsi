@@ -1,6 +1,7 @@
 package fr.epsi.myEpsi.controlers.listeners;
 
 import fr.epsi.myEpsi.ApplicationStartup;
+import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -77,7 +78,7 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 		}
 
 		if (session.getAttribute("adDao") != null) {
-			((IUserDao) session.getAttribute("adDao")).closeConnection();
+			((IAdDao) session.getAttribute("adDao")).closeConnection();
 			session.removeAttribute("adDao");
 		}
 
