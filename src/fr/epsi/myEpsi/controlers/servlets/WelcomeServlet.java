@@ -27,9 +27,9 @@ public class WelcomeServlet extends GenericServlet {
 			return;
 		}
 
-		// retrieve all ads with VALID status
+		// retrieve all ads with VALIDE status
 		List<Ad> ads = ((IAdDao) request.getSession().getAttribute("adDao")).getAllAds()
-				.stream().filter(ad -> EStatus.VALID == ad.getStatus()).collect(Collectors.toList());
+				.stream().filter(ad -> EStatus.VALIDE == ad.getStatus()).collect(Collectors.toList());
 
 		request.setAttribute("ads", ads);
 		request.getRequestDispatcher("/welcome.jsp").forward(request, response);

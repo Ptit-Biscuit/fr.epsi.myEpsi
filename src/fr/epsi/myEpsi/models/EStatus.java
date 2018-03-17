@@ -4,10 +4,10 @@ package fr.epsi.myEpsi.models;
  * Status of an ad
  */
 public enum EStatus {
-	TEMPORARY,
-	VALID,
-	SOLD,
-	DELETE;
+	TEMPORAIRE,
+	VALIDE,
+	VENDUE,
+	SUPPRIMEE;
 
 	public static EStatus getStatus(int value) {
 		EStatus status;
@@ -15,16 +15,16 @@ public enum EStatus {
 		switch (value) {
 			default:
 			case 0:
-				status = TEMPORARY;
+				status = TEMPORAIRE;
 				break;
 			case 1:
-				status = VALID;
+				status = VALIDE;
 				break;
 			case 2:
-				status = SOLD;
+				status = VENDUE;
 				break;
 			case 3:
-				status = DELETE;
+				status = SUPPRIMEE;
 				break;
 		}
 
