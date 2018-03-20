@@ -135,6 +135,9 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 		if (user == null || user instanceof UserDefault)
 			return deleted;
 
+		if (user.getMail().endsWith("@root"))
+			return deleted;
+
 		if (!this.connectionAlive())
 			return deleted;
 

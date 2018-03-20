@@ -29,7 +29,7 @@
         </div>
         <div class="col-sm-3"><%= ad.getDescription() %>
         </div>
-        <div class="col-sm-2"><%= ad.getSeller() %>
+        <div class="col-sm-2"><%= ad.getBuyer() %>
         </div>
         <div class="col-sm-1"><%= ad.getPrice() %>
         </div>

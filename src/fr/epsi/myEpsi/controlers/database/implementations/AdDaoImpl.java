@@ -45,9 +45,9 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		ad.setTitle(result.getString("title"));
 		ad.setDescription(result.getString("description"));
 		ad.setStatus(EStatus.getStatus(result.getInt("status")));
-		ad.setSeller(result.getString("seller"));
 		ad.setPrice(result.getFloat("price"));
 		ad.setSoldAt(result.getDate("soldAt"));
+		ad.setBuyer(result.getString("buyer"));
 		ad.setViewNumber(result.getInt("viewNumber"));
 		ad.setModificationAt(result.getDate("modificationAt"));
 
@@ -57,7 +57,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	@Override
 	public boolean saveAd(Ad ad) {
 		boolean saved = false;
-		String s = "INSERT INTO ads (title, description, status, seller, price, viewNumber) VALUES (?, ?, ?, ?, ?, ?);";
+		String s = "INSERT INTO ads (title, description, status, price, viewNumber) VALUES (?, ?, ?, ?, ?);";
 
 		if (ad == null || ad instanceof AdDefault)
 			return saved;
@@ -69,9 +69,8 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 			ps.setString(1, ad.getTitle());
 			ps.setString(2, ad.getDescription());
 			ps.setInt(3, ad.getStatus().ordinal());
-			ps.setString(4, ad.getSeller());
-			ps.setFloat(5, ad.getPrice());
-			ps.setInt(6, 0);
+			ps.setFloat(4, ad.getPrice());
+			ps.setInt(5, 0);
 			saved = ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			logger.error("Impossible de sauvegarder l'annonce " + ad.getTitle(), e);
@@ -112,9 +111,9 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 				ad.setTitle(rs.getString("title"));
 				ad.setDescription(rs.getString("description"));
 				ad.setStatus(EStatus.getStatus(rs.getInt("status")));
-				ad.setSeller(rs.getString("seller"));
 				ad.setPrice(rs.getFloat("price"));
 				ad.setSoldAt(rs.getDate("soldAt"));
+				ad.setBuyer(rs.getString("buyer"));
 				ad.setViewNumber(rs.getInt("viewNumber"));
 				ad.setModificationAt(rs.getDate("modificationAt"));
 			}

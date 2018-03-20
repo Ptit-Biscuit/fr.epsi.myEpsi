@@ -29,11 +29,6 @@ public class Ad {
 	private EStatus status;
 
 	/**
-	 * Seller
-	 */
-	private String seller;
-
-	/**
 	 * Price
 	 */
 	private float price;
@@ -42,6 +37,11 @@ public class Ad {
 	 * Sold at
 	 */
 	private Date soldAt;
+
+	/**
+	 * Buyer
+	 */
+	private String buyer;
 
 	/**
 	 * Number of views
@@ -126,24 +126,6 @@ public class Ad {
 	}
 
 	/**
-	 * Getter seller
-	 *
-	 * @return Seller
-	 */
-	public String getSeller() {
-		return seller;
-	}
-
-	/**
-	 * Setter seller
-	 *
-	 * @param seller New Seller
-	 */
-	public void setSeller(String seller) {
-		this.seller = seller;
-	}
-
-	/**
 	 * Getter price
 	 *
 	 * @return Price
@@ -177,6 +159,24 @@ public class Ad {
 	 */
 	public void setSoldAt(Date soldAt) {
 		this.soldAt = soldAt;
+	}
+
+	/**
+	 * Getter buyer
+	 *
+	 * @return Seller
+	 */
+	public String getBuyer() {
+		return buyer;
+	}
+
+	/**
+	 * Setter buyer
+	 *
+	 * @param buyer New Seller
+	 */
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
 	}
 
 	/**

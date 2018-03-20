@@ -19,9 +19,9 @@ public class AdDefault extends Ad {
 		this.setTitle("title");
 		this.setDescription("description");
 		this.setStatus(EStatus.TEMPORAIRE);
-		this.setSeller("seller");
 		this.setPrice(0f);
 		this.setSoldAt(date);
+		this.setBuyer("buyer");
 		this.setViewNumber(0);
 		this.setModificationAt(date);
 	}

@@ -38,8 +38,8 @@
                 <div class="col-sm-2">Titre</div>
                 <div class="col-sm-1">Status</div>
                 <div class="col-sm-3">Description</div>
-                <div class="col-sm-2">Vendeur</div>
                 <div class="col-sm-1">Prix</div>
+                <div class="col-sm-2">Acheteur</div>
             </div>
 
             <% for (Ad ad : (List<Ad>) pageContext.getRequest().getAttribute("ads")) { %>
@@ -50,9 +50,9 @@
                 </div>
                 <div class="col-sm-3"><%= ad.getDescription() %>
                 </div>
-                <div class="col-sm-2"><%= ad.getSeller() %>
-                </div>
                 <div class="col-sm-1"><%= ad.getPrice() %>
+                </div>
+                <div class="col-sm-2"><%= ad.getBuyer() %>
                 </div>
             </div>
             <% } %>
