@@ -9,10 +9,6 @@
 <html>
 <head>
     <%@ include file="header.jsp" %>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 
 <body>
@@ -141,16 +137,17 @@
             <%= ad.getPrice() %>
         </div>
         <div class="col-sm-1">
-            <%= ad.getSoldAt() %>
+            <%= ad.getSoldAt() != null ? ad.getSoldAt() : "" %>
         </div>
         <div class="col-sm-1">
             <%= ad.getViewNumber() %>
         </div>
         <div class="col-sm-1">
-            <%= ad.getModificationAt() %>
+            <%= ad.getModificationAt() != null ? ad.getModificationAt() : "" %>
         </div>
         <div class="col-sm-1">
             <input type="hidden" name="adId" value="<%= ad.getId() %>"/>
+            <button type="submit" name="adValidate" value="true">valider</button>
             <button type="submit" name="adDelete" value="true">supprimer</button>
         </div>
     </form>

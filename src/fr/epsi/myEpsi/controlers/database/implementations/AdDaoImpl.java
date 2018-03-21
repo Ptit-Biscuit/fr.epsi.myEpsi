@@ -55,7 +55,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	}
 
 	@Override
-	public boolean saveAd(Ad ad) {
+	public boolean save(Ad ad) {
 		boolean saved = false;
 		String s = "INSERT INTO ads (title, description, status, seller, price, viewNumber) VALUES (?, ?, ?, ?, ?, ?);";
 
@@ -81,7 +81,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	}
 
 	@Override
-	public boolean deleteAd(int adId) {
+	public boolean delete(int adId) {
 		boolean deleted = false;
 		String s = "DELETE FROM ads WHERE id = ?";
 
@@ -108,6 +108,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
+				ad = new Ad();
 				ad.setId(rs.getInt("id"));
 				ad.setTitle(rs.getString("title"));
 				ad.setDescription(rs.getString("description"));
@@ -170,6 +171,53 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		}
 
 		return ads;
+	}
+
+	@Override
+	public boolean validate(int id) {
+		boolean validated = false;
+		String s = "UPDATE ads SET status = ? WHERE id = ?";
+
+		if (!this.connectionAlive())
+			return validated;
+
+		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
+			ps.setInt(1, 1);
+			ps.setInt(2, id);
+
+			validated = ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			logger.error("Impossible de valider l'annonce n°" + id, e);
+		}
+
+		return validated;
+	}
+
+	@Override
+	public boolean update(Ad ad) {
+		boolean updated = false;
+		String s = "UPDATE ads SET title = ?, description = ?, price = ?, viewNumber = ?, modificationAt = ? WHERE id = ?";
+
+		if (ad instanceof AdDefault)
+			return updated;
+
+		if (!this.connectionAlive())
+			return updated;
+
+		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
+			ps.setString(1, ad.getTitle());
+			ps.setString(2, ad.getDescription());
+			ps.setFloat(3, ad.getPrice());
+			ps.setInt(4, ad.getViewNumber());
+			ps.setDate(5, ad.getModificationAt());
+			ps.setInt(6, ad.getId());
+
+			updated = ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			logger.error("Impossible de mettre à jour l'annonce n°" + ad.getId(), e);
+		}
+
+		return updated;
 	}
 
 	@Override

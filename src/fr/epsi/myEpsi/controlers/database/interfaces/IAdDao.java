@@ -13,10 +13,10 @@ public interface IAdDao extends IDao {
 	/**
 	 * Save an ad in database
 	 *
-	 * @param ad Ad to saveAd
+	 * @param ad Ad to save
 	 * @return <code>True</code> if ad has been saved, <code>false</code> otherwise
 	 */
-	boolean saveAd(Ad ad);
+	boolean save(Ad ad);
 
 	/**
 	 * Delete an ad in database
@@ -24,7 +24,7 @@ public interface IAdDao extends IDao {
 	 * @param adId Id of the ad to delete
 	 * @return <code>True</code> if ad has been deleted, <code>false</code> otherwise
 	 */
-	boolean deleteAd(int adId);
+	boolean delete(int adId);
 
 	/**
 	 * Getter of all the ads in database
@@ -49,6 +49,22 @@ public interface IAdDao extends IDao {
 	 * @return A <code>List</code> of the ads
 	 */
 	List<Ad> getUserAds(String userMail);
+
+	/**
+	 * Validate an ad
+	 *
+	 * @param id ad's id
+	 * @return <code>True</code> if ad has been validate, <code>false</code> otherwise
+	 */
+	boolean validate(int id);
+
+	/**
+	 * Update an ad
+	 *
+	 * @param ad Ad to update
+	 * @return <code>True</code> if ad has been updated, <code>false</code> otherwise
+	 */
+	boolean update(Ad ad);
 
 	/**
 	 * Modify an ad that has been bought

@@ -2,7 +2,11 @@
 
 <html>
 <head>
-    <%@ include file="header.jsp" %>
+    <meta charset="UTF-8"/>
+
+    <title>LeBonKoinKoin</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 
     <body>

@@ -3,13 +3,11 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<% User user = ((User) pageContext.getSession().getAttribute("user")); %>
+
 <html>
 <head>
     <%@ include file="header.jsp" %>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 
 <body>
@@ -21,25 +19,33 @@
 
 <br/>
 
-<% if (((User) pageContext.getSession().getAttribute("user")).getMail().contains("@root")) { %>
+<% if (user.getMail().contains("@root")) { %>
 <a href="${pageContext.request.contextPath}/administration">Administration</a>
 
 <br/>
 <% } %>
 
-<a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
+<a href="${pageContext.request.contextPath}/ads?userMail=<%= user.getMail() %>">Mes annonces</a>
 
 <br/>
 
 <a href="${pageContext.request.contextPath}/createAd">Créer une annonce</a>
 
+<br/>
+
+<a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
+
+<br/>
+
 <div class="card-deck" style="max-width: 98%">
     <% for (Ad ad : (List<Ad>) pageContext.getRequest().getAttribute("ads")) { %>
     <jsp:include page="adCard.jsp">
         <jsp:param name="id" value="<%= ad.getId() %>"/>
+        <jsp:param name="status" value="<%= ad.getStatus().name().toLowerCase() %>"/>
         <jsp:param name="title" value="<%= ad.getTitle() %>"/>
         <jsp:param name="desc" value="<%= ad.getDescription() %>"/>
         <jsp:param name="price" value="<%= ad.getPrice() %>"/>
+        <jsp:param name="seller" value="<%= ad.getSeller() %>"/>
         <jsp:param name="detail" value="true"/>
         <jsp:param name="canBuy" value="true"/>
     </jsp:include>

@@ -37,6 +37,7 @@ public class AdministrationServlet extends GenericServlet {
 		String userModification = ServletUtil.retrieveValue(request, "userModification");
 		String userDelete = ServletUtil.retrieveValue(request, "userDelete");
 		String adCreation = ServletUtil.retrieveValue(request, "adCreation");
+		String adValidate = ServletUtil.retrieveValue(request, "adValidate");
 		String adDelete = ServletUtil.retrieveValue(request, "adDelete");
 
 		String mail = ServletUtil.retrieveValue(request, "mail");
@@ -63,9 +64,13 @@ public class AdministrationServlet extends GenericServlet {
 		if (!adCreation.isEmpty() && Boolean.valueOf(adCreation))
 			CreateAdForm.createAd(request);
 
+		// Validate a temporary ad
+		if (!adValidate.isEmpty() && Boolean.valueOf(adValidate))
+			((IAdDao) request.getSession().getAttribute("adDao")).validate(Integer.valueOf(adId));
+
 		// Delete an ad
 		if (!adDelete.isEmpty() && Boolean.valueOf(adDelete) && !adId.isEmpty())
-			((IAdDao) request.getSession().getAttribute("adDao")).deleteAd(Integer.valueOf(adId));
+			((IAdDao) request.getSession().getAttribute("adDao")).delete(Integer.valueOf(adId));
 
 		response.sendRedirect("/administration.jsp");
 	}

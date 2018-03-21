@@ -9,7 +9,7 @@ import fr.epsi.myEpsi.models.beans.AdDefault;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Form to saveAd an ad in database
+ * Form to save an ad in database
  */
 public class CreateAdForm {
 
@@ -28,7 +28,7 @@ public class CreateAdForm {
 		float price = Float.valueOf(ServletUtil.retrieveValue(request, "adPrice"));
 		String seller = ServletUtil.retrieveValue(request, "adSeller");
 
-		if (title.isEmpty() || desc.isEmpty())
+		if (title.isEmpty())
 			return new AdDefault();
 
 		Ad ad = new Ad();
@@ -38,7 +38,7 @@ public class CreateAdForm {
 		ad.setSeller(seller);
 		ad.setPrice(price);
 
-		if (((IAdDao) request.getSession().getAttribute("adDao")).saveAd(ad))
+		if (((IAdDao) request.getSession().getAttribute("adDao")).save(ad))
 			return ad;
 		else
 			return new AdDefault();
