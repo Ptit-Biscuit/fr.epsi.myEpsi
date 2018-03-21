@@ -9,53 +9,41 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 
-    <body>
-        <% if (pageContext.getAttribute("error") != null)
-            out.println("<div class=\"error\">" + pageContext.getAttribute("error") + "</div>");
-        %>
+<body>
+<% if (pageContext.getAttribute("error") != null)
+    out.println("<div class=\"error\">" + pageContext.getAttribute("error") + "</div>");
+%>
 
-        <img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
+<img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
 
-        <br />
+<br/>
 
-        <% if (((User) pageContext.getSession().getAttribute("user")).getMail().contains("@root")) { %>
-        <a href="${pageContext.request.contextPath}/administration">Administration</a>
+<% if (((User) pageContext.getSession().getAttribute("user")).getMail().contains("@root")) { %>
+<a href="${pageContext.request.contextPath}/administration">Administration</a>
 
-        <br/>
-        <% } %>
+<br/>
+<% } %>
 
-        <a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
+<a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
 
-        <br/>
+<br/>
 
-        <a href="${pageContext.request.contextPath}/createAd">Créer une annonce</a>
+<a href="${pageContext.request.contextPath}/createAd">Créer une annonce</a>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-2">Titre</div>
-                <div class="col-sm-1">Status</div>
-                <div class="col-sm-3">Description</div>
-                <div class="col-sm-1">Prix</div>
-                <div class="col-sm-2">Acheteur</div>
-            </div>
-
-            <% for (Ad ad : (List<Ad>) pageContext.getRequest().getAttribute("ads")) { %>
-            <div class="row">
-                <div class="col-sm-2"><%= ad.getTitle() %>
-                </div>
-                <div class="col-sm-1"><%= ad.getStatus().name().toLowerCase() %>
-                </div>
-                <div class="col-sm-3"><%= ad.getDescription() %>
-                </div>
-                <div class="col-sm-1"><%= ad.getPrice() %>
-                </div>
-                <div class="col-sm-2"><%= ad.getBuyer() %>
-                </div>
-            </div>
-            <% } %>
-        </div>
-    </body>
+<div class="card-deck" style="max-width: 98%">
+    <% for (Ad ad : (List<Ad>) pageContext.getRequest().getAttribute("ads")) { %>
+    <jsp:include page="adCard.jsp">
+        <jsp:param name="id" value="<%= ad.getId() %>"/>
+        <jsp:param name="title" value="<%= ad.getTitle() %>"/>
+        <jsp:param name="desc" value="<%= ad.getDescription() %>"/>
+        <jsp:param name="price" value="<%= ad.getPrice() %>"/>
+        <jsp:param name="detail" value="true"/>
+        <jsp:param name="canBuy" value="true"/>
+    </jsp:include>
+    <% } %>
+</div>
+</body>
 </html>

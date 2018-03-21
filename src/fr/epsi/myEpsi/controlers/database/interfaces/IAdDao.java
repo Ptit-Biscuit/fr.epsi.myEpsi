@@ -1,6 +1,7 @@
 package fr.epsi.myEpsi.controlers.database.interfaces;
 
 import fr.epsi.myEpsi.models.beans.Ad;
+import fr.epsi.myEpsi.models.beans.User;
 
 import java.util.List;
 
@@ -39,13 +40,22 @@ public interface IAdDao extends IDao {
 	 * @return The ad found or <code>AdDefault</code> otherwise
 	 * @see fr.epsi.myEpsi.models.beans.AdDefault
 	 */
-	Ad getAd(String id);
+	Ad getAd(int id);
 
 	/**
-	 * Getter Ads
+	 * Getter Ads of a user
 	 *
 	 * @param userMail Mail of the user
 	 * @return A <code>List</code> of the ads
 	 */
 	List<Ad> getUserAds(String userMail);
+
+	/**
+	 * Modify an ad that has been bought
+	 *
+	 * @param user Buyer
+	 * @param id   Id of the ad bought
+	 * @return <code>True</code> if correctly modify, <code>false</code> otherwise
+	 */
+	boolean buy(User user, int id);
 }

@@ -1,4 +1,5 @@
 <%@ page import="fr.epsi.myEpsi.models.EStatus" %>
+<%@ page import="fr.epsi.myEpsi.models.beans.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -16,6 +17,8 @@
         <input id="adDescription" name="adDescription" type="text" placeholder="Description" maxlength="255" required/>
         <input type="hidden" name="adStatus" value="<%= EStatus.TEMPORAIRE.ordinal() %>"/>
         <input id="adPrice" name="adPrice" type="number" placeholder="Prix" min="0" step="any" required/>
+        <input type="hidden" name="adSeller"
+               value="<%= ((User) pageContext.getSession().getAttribute("user")).getMail() %>">
     </fieldset>
 
     <fieldset class="actions">

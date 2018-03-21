@@ -4,14 +4,13 @@ import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import fr.epsi.myEpsi.models.EStatus;
 import fr.epsi.myEpsi.models.beans.Ad;
 import fr.epsi.myEpsi.models.beans.AdDefault;
+import fr.epsi.myEpsi.models.beans.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -45,6 +44,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		ad.setTitle(result.getString("title"));
 		ad.setDescription(result.getString("description"));
 		ad.setStatus(EStatus.getStatus(result.getInt("status")));
+		ad.setSeller(result.getString("seller"));
 		ad.setPrice(result.getFloat("price"));
 		ad.setSoldAt(result.getDate("soldAt"));
 		ad.setBuyer(result.getString("buyer"));
@@ -57,7 +57,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	@Override
 	public boolean saveAd(Ad ad) {
 		boolean saved = false;
-		String s = "INSERT INTO ads (title, description, status, price, viewNumber) VALUES (?, ?, ?, ?, ?);";
+		String s = "INSERT INTO ads (title, description, status, seller, price, viewNumber) VALUES (?, ?, ?, ?, ?, ?);";
 
 		if (ad == null || ad instanceof AdDefault)
 			return saved;
@@ -69,8 +69,9 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 			ps.setString(1, ad.getTitle());
 			ps.setString(2, ad.getDescription());
 			ps.setInt(3, ad.getStatus().ordinal());
-			ps.setFloat(4, ad.getPrice());
-			ps.setInt(5, 0);
+			ps.setString(4, ad.getSeller());
+			ps.setFloat(5, ad.getPrice());
+			ps.setInt(6, 0);
 			saved = ps.executeUpdate() == 1;
 		} catch (SQLException e) {
 			logger.error("Impossible de sauvegarder l'annonce " + ad.getTitle(), e);
@@ -95,7 +96,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 	}
 
 	@Override
-	public Ad getAd(String id) {
+	public Ad getAd(int id) {
 		Ad ad = new AdDefault();
 		String s = "SELECT * FROM ads WHERE id = ?;";
 
@@ -103,7 +104,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 			return ad;
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
-			ps.setString(1, id);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -111,6 +112,7 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 				ad.setTitle(rs.getString("title"));
 				ad.setDescription(rs.getString("description"));
 				ad.setStatus(EStatus.getStatus(rs.getInt("status")));
+				ad.setSeller(rs.getString("seller"));
 				ad.setPrice(rs.getFloat("price"));
 				ad.setSoldAt(rs.getDate("soldAt"));
 				ad.setBuyer(rs.getString("buyer"));
@@ -168,5 +170,30 @@ public class AdDaoImpl extends DaoImpl implements IAdDao {
 		}
 
 		return ads;
+	}
+
+	@Override
+	public boolean buy(User user, int id) {
+		boolean modify = false;
+		String s = "UPDATE ads SET status = ?, buyer = ?, soldAt = ? WHERE id = ?";
+
+		if (user == null)
+			return modify;
+
+		if (!this.connectionAlive())
+			return modify;
+
+		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
+			ps.setInt(1, 2);
+			ps.setString(2, user.getMail());
+			ps.setDate(3, new Date(Calendar.getInstance().getTimeInMillis()));
+			ps.setInt(4, id);
+
+			modify = ps.executeUpdate() == 1;
+		} catch (SQLException e) {
+			logger.error("impossible d'acheter l'annonce n°" + id, e);
+		}
+
+		return modify;
 	}
 }

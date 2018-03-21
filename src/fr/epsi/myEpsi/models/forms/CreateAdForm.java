@@ -35,8 +35,8 @@ public class CreateAdForm {
 		ad.setTitle(title);
 		ad.setDescription(desc);
 		ad.setStatus(EStatus.getStatus(status));
+		ad.setSeller(seller);
 		ad.setPrice(price);
-		ad.setBuyer(seller);
 
 		if (((IAdDao) request.getSession().getAttribute("adDao")).saveAd(ad))
 			return ad;

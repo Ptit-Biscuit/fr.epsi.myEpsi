@@ -12,7 +12,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 </head>
 
 <body>
@@ -71,7 +71,10 @@
         <div class="col-sm-2">
             <input type="hidden" name="oldMail" value="<%= user.getMail() %>"/>
             <button type="submit" name="userModification" value="true">modifier</button>
+
+            <% if (!user.getMail().endsWith("@root")) { %>
             <button type="submit" name="userDelete" value="true">supprimer</button>
+            <% } %>
         </div>
     </form>
     <% } %>
@@ -82,9 +85,9 @@
         <div class="col-sm-2">titre</div>
         <div class="col-sm-2">description</div>
         <div class="col-sm-1">status</div>
+        <div class="col-sm-2">vendeur</div>
         <div class="col-sm-1">prix</div>
         <div class="col-sm-1">vendu le</div>
-        <div class="col-sm-2">acheteur</div>
         <div class="col-sm-1">nombre de vues</div>
         <div class="col-sm-1">modifié le</div>
         <div class="col-sm-1">actions</div>
@@ -100,13 +103,13 @@
         <div class="col-sm-1">
             <input type="hidden" name="adStatus" value="<%= EStatus.VALIDE.ordinal() %>"/>
         </div>
+        <div class="col-sm-2">
+            <input class="form-control" type="email" name="adSeller" maxlength="64"/>
+        </div>
         <div class="col-sm-1">
             <input class="form-control" type="number" name="adPrice" min="0" step="any"/>
         </div>
         <div class="col-sm-1">
-            <input type="hidden"/>
-        </div>
-        <div class="col-sm-2">
             <input type="hidden"/>
         </div>
         <div class="col-sm-1">
@@ -131,14 +134,14 @@
         <div class="col-sm-1">
             <%= ad.getStatus().name().toLowerCase() %>
         </div>
+        <div class="col-sm-2">
+            <%= ad.getSeller() %>
+        </div>
         <div class="col-sm-1">
             <%= ad.getPrice() %>
         </div>
         <div class="col-sm-1">
             <%= ad.getSoldAt() %>
-        </div>
-        <div class="col-sm-2">
-            <%= ad.getBuyer() %>
         </div>
         <div class="col-sm-1">
             <%= ad.getViewNumber() %>

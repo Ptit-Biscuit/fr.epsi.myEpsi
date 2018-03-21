@@ -23,14 +23,15 @@ public class GetAdServlet extends GenericServlet {
 
 		String userMail = request.getParameter("userMail");
 		String id = request.getParameter("id");
+		int adId = (id != null) ? Integer.valueOf(id) : 0;
 
 		if (userMail != null) {
 			ads = adDao.getUserAds(userMail);
-		} else if (id != null) {
+		} else if (adId > 0) {
 			ads = new ArrayList<>();
-			ads.add(adDao.getAd(id));
+			ads.add(adDao.getAd(adId));
 		} else {
-			ads = adDao.getAllAds();
+			ads = adDao.getAllAds();//.stream().filter(a -> a.getStatus().equals(EStatus.VALIDE)).collect(Collectors.toList());
 		}
 
 		request.setAttribute("ads", ads);
