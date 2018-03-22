@@ -42,9 +42,11 @@ public class ApplicationStartup {
 
 					if (userDao.connectionAlive() && adDao.connectionAlive()) {
 						// set user DAO in context
+						logger.error(userDao.getAllUsers().size() + " utilisateurs");
 						sessionEvent.getSession().setAttribute("userDao", userDao);
 
 						// set ad DAO in context
+						logger.error(adDao.getAllAds().size() + " annonces");
 						sessionEvent.getSession().setAttribute("adDao", adDao);
 
 						// session is initialized
