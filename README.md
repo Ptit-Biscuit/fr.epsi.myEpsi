@@ -10,6 +10,17 @@ This JEE project is a '[leboncoin](https://www.leboncoin.fr/)-like' website to c
 1. Open browser
 1. Go to `localhost:8080`
 
+## Logging
+
+All application logs are under `$CATALINA_HOME` or `$CATALINA_BASE` within `leBonKoinKoin.log` file
+
+You can also use `jconsole` to monitor the application's:
+* CPU usage
+* Memory usage
+* See all ads in database
+* See and set logs' levels
+* etc
+
 ## Authors
 * Vincent Brebion - _Ptit-Biscuit_
 * Benjamin Guillon - _benguillon_
