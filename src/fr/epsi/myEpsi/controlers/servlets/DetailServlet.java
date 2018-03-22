@@ -44,6 +44,8 @@ public class DetailServlet extends GenericServlet {
 		String id = ServletUtil.retrieveValue(request, "adId");
 		Ad ad = id.isEmpty() ? new AdDefault() : adDao.getAd(Integer.valueOf(id));
 
+		String adValidate = ServletUtil.retrieveValue(request, "adValidate");
+		String adDelete = ServletUtil.retrieveValue(request, "adDelete");
 		String adTitle = ServletUtil.retrieveValue(request, "adTitle");
 		String adDesc = ServletUtil.retrieveValue(request, "adDescription");
 		float adPrice = Float.valueOf(ServletUtil.retrieveValue(request, "adPrice"));
@@ -53,12 +55,19 @@ public class DetailServlet extends GenericServlet {
 			return;
 		}
 
-		ad.setTitle(adTitle);
-		ad.setDescription(adDesc);
-		ad.setPrice(adPrice);
-		ad.setModificationAt(new Date(Calendar.getInstance().getTimeInMillis()));
+		if (!adValidate.isEmpty() && Boolean.valueOf(adValidate)) {
+			ad.setTitle(adTitle);
+			ad.setDescription(adDesc);
+			ad.setPrice(adPrice);
+			ad.setModificationAt(new Date(Calendar.getInstance().getTimeInMillis()));
 
-		adDao.update(ad);
+			adDao.update(ad);
+		}
+
+		if (!adDelete.isEmpty() && Boolean.valueOf(adDelete)) {
+			adDao.delete(ad.getId());
+		}
+
 		response.sendRedirect("/welcome");
 	}
 }

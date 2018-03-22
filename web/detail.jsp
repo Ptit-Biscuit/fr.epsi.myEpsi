@@ -4,7 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <% Ad ad = (Ad) request.getAttribute("ad");
-    boolean userOwnAd = ad.getSeller().equals(((User) request.getSession().getAttribute("user")).getMail()); %>
+    boolean userOwnAd = ad.getSeller().equals(((User) request.getSession().getAttribute("user")).getMail());
+    boolean notSold = !ad.getStatus().equals(EStatus.VENDUE); %>
 
 <html>
 <head>
@@ -16,14 +17,14 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title text-center">
-                <% if (userOwnAd) { %>
+                <% if (userOwnAd && notSold) { %>
                 <input class="form-control" type="text" name="adTitle" value="<%= ad.getTitle() %>"
                        maxlength="140" autofocus required/>
                 <% } else
                     out.println(ad.getTitle()); %>
             </h5>
             <p class="card-text">
-                <%= ad.getStatus().name().toLowerCase() + (ad.getStatus().equals(EStatus.VENDUE) ? " (" + ad.getBuyer() + ")" : "") %>
+                <%= ad.getStatus().name().toLowerCase() + (!notSold ? " (" + ad.getBuyer() + ")" : "") %>
             </p>
             <p class="card-text text-right">
                 <%= ad.getViewNumber() %> vue(s)
@@ -32,14 +33,14 @@
 
         <div class="card-body text-secondary">
             <p class="card-text">
-                <% if (userOwnAd) { %>
+                <% if (userOwnAd && notSold) { %>
                 <input class="form-control" type="text" name="adDescription"
                        value="<%= ad.getDescription()%>"/>
                 <% } else
                     out.println(ad.getDescription()); %>
             </p>
             <p class="card-text">
-                <% if (userOwnAd) { %>
+                <% if (userOwnAd && notSold) { %>
                 <input class="form-control" type="number" name="adPrice" value="<%= ad.getPrice() %>"
                        min="0" step="any" required/>
                 <% } else
@@ -57,8 +58,9 @@
             <input type="hidden" name="adId" value="<%= ad.getId() %>"/>
 
             <% if (request.getSession().getAttribute("user") != null) {
-                if (userOwnAd) { %>
-            <button type="submit" class="btn btn-secondary">Valider</button>
+                if (userOwnAd && notSold) { %>
+            <button type="submit" name="adValidate" value="true" class="btn btn-secondary">Valider</button>
+            <button type="submit" name="adDelete" value="true" class="btn btn-secondary">Supprimer</button>
             <% } %>
             <a href="${pageContext.request.contextPath}/welcome" class="btn btn-secondary">Retour</a>
             <% } else { %>
