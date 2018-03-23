@@ -100,6 +100,13 @@ class UserDaoImplTest {
 
 	@Test
 	void deleteUser() {
+		User admin = userDao.find("Administrateur@root");
+
+		assertFalse(userDao.deleteUser(admin));
+	}
+
+	@Test
+	void deleteUser2() {
 		assertTrue(userDao.deleteUser(this.testUser));
 
 		User userNotFound = userDao.find(this.testUser.getMail());
