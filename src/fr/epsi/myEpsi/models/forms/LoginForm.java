@@ -32,7 +32,7 @@ public class LoginForm {
 		// retrieve user from database
 		User user = ((UserDaoImpl) request.getSession().getAttribute("userDao")).find(mail);
 
-		if (user.getPassword().equals(HashUtil.hashPassword(password)))
+		if (!(user instanceof UserDefault) && user.getPassword().equals(HashUtil.hashPassword(password)))
 			return user;
 		else {
 			LogManager.getLogger(LoginForm.class).error(mail + " --> mot de passe incorrect : " + password);
