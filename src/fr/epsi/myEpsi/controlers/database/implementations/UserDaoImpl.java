@@ -62,6 +62,9 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 		List<User> users = new ArrayList<>();
 		String s = "SELECT * FROM users;";
 
+		if (!this.connectionAlive())
+			return users;
+
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ResultSet rs = ps.executeQuery();
 
@@ -87,10 +90,10 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 		String s = "SELECT * FROM users WHERE mail = ?;";
 
 		if (mail == null || mail.trim().isEmpty())
-			return null;
+			return user;
 
 		if (!this.connectionAlive())
-			return null;
+			return user;
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ps.setString(1, mail);
@@ -99,6 +102,7 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 			if (rs.next()) {
 				user = new User();
 				user.setMail(rs.getString("mail"));
+				user.setPseudo(rs.getString("pseudo"));
 				user.setPassword(rs.getString("pass"));
 				user.setSubsciption(rs.getTimestamp("subscription"));
 			}
@@ -113,6 +117,9 @@ public class UserDaoImpl extends DaoImpl implements IUserDao {
 	public boolean updateUser(String oldMail, User user) {
 		boolean updated = false;
 		String s = "UPDATE users SET mail = ?, pseudo = ?, pass = ? WHERE mail = ?";
+
+		if (!this.connectionAlive())
+			return updated;
 
 		try (PreparedStatement ps = this.connection.prepareStatement(s)) {
 			ps.setString(1, user.getMail());
