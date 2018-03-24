@@ -22,7 +22,7 @@ public class BuyServlet extends GenericServlet {
 		int adId = Integer.valueOf(request.getParameter("id"));
 
 		if (user == null || adDao.getAd(adId).getStatus().equals(EStatus.VENDUE)) {
-			response.sendRedirect("/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 			return;
 		}
 

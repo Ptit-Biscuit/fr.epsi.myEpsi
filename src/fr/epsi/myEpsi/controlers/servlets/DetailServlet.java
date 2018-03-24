@@ -25,7 +25,7 @@ public class DetailServlet extends GenericServlet {
 		Ad ad = id.isEmpty() ? new AdDefault() : adDao.getAd(Integer.valueOf(id));
 
 		if (request.getSession().getAttribute("user") == null || ad instanceof AdDefault) {
-			response.sendRedirect("/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 			return;
 		}
 
@@ -51,7 +51,7 @@ public class DetailServlet extends GenericServlet {
 		float adPrice = Float.valueOf(ServletUtil.retrieveValue(request, "adPrice"));
 
 		if (ad instanceof AdDefault) {
-			response.sendRedirect("/welcome");
+			response.sendRedirect(request.getContextPath() + "/welcome");
 			return;
 		}
 
@@ -68,6 +68,6 @@ public class DetailServlet extends GenericServlet {
 			adDao.delete(ad.getId());
 		}
 
-		response.sendRedirect("/welcome");
+		response.sendRedirect(request.getContextPath() + "/welcome");
 	}
 }

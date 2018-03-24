@@ -22,7 +22,7 @@ public class AdministrationServlet extends GenericServlet {
 		super.doGet(request, response);
 
 		if (request.getSession().getAttribute("user") == null) {
-			response.sendRedirect("/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 			return;
 		}
 
@@ -72,6 +72,6 @@ public class AdministrationServlet extends GenericServlet {
 		if (!adDelete.isEmpty() && Boolean.valueOf(adDelete) && !adId.isEmpty())
 			((IAdDao) request.getSession().getAttribute("adDao")).delete(Integer.valueOf(adId));
 
-		response.sendRedirect("/administration.jsp");
+		response.sendRedirect(request.getContextPath() + "/administration.jsp");
 	}
 }

@@ -18,7 +18,7 @@ public class CreateAdServlet extends GenericServlet {
 		super.doGet(request, response);
 
 		if (request.getSession().getAttribute("user") == null) {
-			response.sendRedirect("/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 			return;
 		}
 
@@ -34,6 +34,6 @@ public class CreateAdServlet extends GenericServlet {
 		if (adCreated instanceof AdDefault)
 			request.setAttribute("error", "L'annonce n'a pas été enregistrée");
 
-		response.sendRedirect("/welcome");
+		response.sendRedirect(request.getContextPath() + "/welcome");
 	}
 }

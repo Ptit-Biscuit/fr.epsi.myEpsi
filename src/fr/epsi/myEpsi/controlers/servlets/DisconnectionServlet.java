@@ -23,6 +23,6 @@ public class DisconnectionServlet extends GenericServlet {
 		session.invalidate();
 
 		// Return to index page
-		response.sendRedirect("/index.html");
+		response.sendRedirect(request.getContextPath() + "/index.html");
 	}
 }

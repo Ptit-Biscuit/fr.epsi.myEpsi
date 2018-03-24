@@ -33,7 +33,7 @@ public class SubscribeServlet extends GenericServlet {
 		if (!(user instanceof UserDefault)) {
 			// register user in session and redirect to welcome servlet
 			request.getSession().setAttribute("user", user);
-			response.sendRedirect("/welcome");
+			response.sendRedirect(request.getContextPath() + "/welcome");
 		} else {
 			// refresh page and show error
 			request.setAttribute("userAlreadyExists", true);

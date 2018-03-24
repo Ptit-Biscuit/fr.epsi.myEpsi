@@ -23,7 +23,7 @@ public class WelcomeServlet extends GenericServlet {
 		super.doGet(request, response);
 
 		if (request.getSession().getAttribute("user") == null) {
-			response.sendRedirect("/index.jsp");
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
 			return;
 		}
 
