@@ -28,63 +28,50 @@
 
 <h1>Utilisateurs</h1>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">Mail</div>
-        <div class="col-sm-2">Pseudo</div>
-        <div class="col-sm-3">Mot de passe</div>
-        <div class="col-sm-2">Date d'inscription</div>
-        <div class="col-sm-2">Actions</div>
-    </div>
-
+<table id="annonces">
+    <tr>
+        <th>Mail</th>
+        <th>Pseudo</th>
+        <th>Mot de passe</th>
+        <th>Date d'inscription</th>
+        <th>Actions</th>
+    </tr>
     <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
-        <div class="col-sm-2">
-            <input class="form-control" type="email" name="mail" placeholder="Adresse mail" maxlength="64"/>
-        </div>
-        <div class="col-sm-2">
-            <input class="form-control" type="text" name="pseudo" placeholder="Pseudonyme" maxlength="20"/>
-        </div>
-        <div class="col-sm-3">
-            <input class="form-control" type="password" name="password" placeholder="Mot de passe" minlength="8"/>
-        </div>
-        <div class="col-sm-2">
-            <input class="form-control" type="password" name="confirm" placeholder="Confirmation mot de passe"
-                   minlength="8"/>
-        </div>
-        <div class="col-sm-2">
-            <button type="submit" name="userCreation" value="true">ajouter</button>
-        </div>
+        <tr>
+            <td><input class="form-control" type="email" name="mail" placeholder="Adresse mail" maxlength="64"/></td>
+            <td><input class="form-control" type="text" name="pseudo" placeholder="Pseudonyme" maxlength="20"/></td>
+            <td><input class="form-control" type="password" name="password" placeholder="Mot de passe" minlength="8"/></td>
+            <td><input class="form-control" type="password" name="confirm" placeholder="Confirmation mot de passe"
+                       minlength="8"/></td>
+            <td>
+                <button class="btn btn-secondary" type="submit" name="adCreation" value="true">Ajouter</button>
+            </td>
+        </tr>
     </form>
-
     <% for (User user : ((IUserDao) pageContext.getSession().getAttribute("userDao")).getAllUsers()) { %>
     <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
-        <div class="col-sm-2">
-            <input class="form-control" type="email" name="mail" value="<%= user.getMail() %>"/>
-        </div>
-        <div class="col-sm-2">
-            <input class="form-control" type="text" name="pseudo" value="<%= user.getPseudo() %>"/>
-        </div>
-        <div class="col-sm-3">
-            <input class="form-control" type="text" name="password" value="<%= user.getPassword() %>"/>
-        </div>
-        <div class="col-sm-2">
-            <%= SimpleDateFormat.getInstance().format(user.getSubsciption().getTime()) %>
-        </div>
-        <div class="col-sm-2">
-            <input type="hidden" name="oldMail" value="<%= user.getMail() %>"/>
-            <button type="submit" name="userModification" value="true">modifier</button>
+        <tr>
+            <td><input class="form-control" type="email" name="mail" value="<%= user.getMail() %>"/></td>
+            <td><input class="form-control" type="text" name="pseudo" value="<%= user.getPseudo() %>"/></td>
+            <td><input class="form-control" type="text" name="password" value="<%= user.getPassword() %>"/></td>
+            <td><%= SimpleDateFormat.getInstance().format(user.getSubsciption().getTime()) %></td>
+            <td>
+                <input type="hidden" name="oldMail" value="<%= user.getMail() %>"/>
+                <button class="btn btn-secondary" type="submit" name="userModification" value="true">Modifier</button>
 
-            <% if (!user.getMail().endsWith("@root")) { %>
-            <button type="submit" name="userDelete" value="true">supprimer</button>
-            <% } %>
-        </div>
+                <% if (!user.getMail().endsWith("@root")) { %>
+                <button class="btn btn-secondary" type="submit" name="userDelete" value="true">Supprimer</button>
+                <% } %>
+            </td>
+        </tr>
     </form>
     <% } %>
-</div>
+</table>
+
 
 <h1>Annonces</h1>
 
-<table>
+<table id="annonces">
     <tr>
         <th>Titre</th>
         <th>Description</th>
@@ -96,101 +83,41 @@
         <th>Modifié le</th>
         <th>Actions</th>
     </tr>
-    <% for (Ad ad : ((IAdDao) pageContext.getSession().getAttribute("adDao")).getAllAds()) { %>
+    <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
     <tr>
-        <th><%= ad.getTitle() %></th>
-        <th><%= ad.getDescription() %></th>
-        <th><%= ad.getStatus().name().toLowerCase() %></th>
-        <th><%= ad.getSeller() %></th>
-        <th><%= ad.getPrice() %></th>
-        <th><%= ad.getSoldAt() != null ? ad.getSoldAt() : "" %></th>
-        <th><%= ad.getViewNumber() %></th>
-        <th><%= ad.getModificationAt() != null ? ad.getModificationAt() : "" %></th>
-        <th>
-            <input type="hidden" name="adId" value="<%= ad.getId() %>"/>
-            <button type="submit" name="adValidate" value="true">Valider</button>
-            <button type="submit" name="adDelete" value="true">Supprimer</button>
-        </th>
+        <td><input class="form-control" type="text" name="adTitle" maxlength="140"/></td>
+        <td><input class="form-control" type="text" name="adDescription" maxlength="255"/></td>
+        <td><input type="hidden" name="adStatus" value="<%= EStatus.VALIDE.ordinal() %>"/></td>
+        <td><input class="form-control" type="email" name="adSeller" maxlength="64"/></td>
+        <td><input class="form-control" type="number" name="adPrice" min="0" step="any"/></td>
+        <td><input type="hidden"/></td>
+        <td><input type="hidden"/></td>
+        <td><input type="hidden"/></td>
+        <td>
+            <button class="btn btn-secondary" type="submit"  name="adCreation" value="true">Ajouter</button>
+        </td>
     </tr>
+    </form>
+    <% for (Ad ad : ((IAdDao) pageContext.getSession().getAttribute("adDao")).getAllAds()) { %>
+    <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
+    <tr>
+        <td><%= ad.getTitle() %></td>
+        <td><%= ad.getDescription() %></td>
+        <td><%= ad.getStatus().name().toLowerCase() %></td>
+        <td><%= ad.getSeller() %></td>
+        <td><%= ad.getPrice() %></td>
+        <td><%= ad.getSoldAt() != null ? ad.getSoldAt() : "" %></td>
+        <td><%= ad.getViewNumber() %></td>
+        <td><%= ad.getModificationAt() != null ? ad.getModificationAt() : "" %></td>
+        <td>
+            <input type="hidden" name="adId" value="<%= ad.getId() %>"/>
+            <button class="btn btn-secondary" type="submit" name="adValidate" value="true">Valider</button>
+            <button class="btn btn-secondary" type="submit" name="adDelete" value="true">Supprimer</button>
+        </td>
+    </tr>
+    </form>
     <% } %>
 </table>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">Titre</div>
-        <div class="col-sm-2">Description</div>
-        <div class="col-sm-1">Status</div>
-        <div class="col-sm-2">Vendeur</div>
-        <div class="col-sm-1">Prix</div>
-        <div class="col-sm-1">Vendu le</div>
-        <div class="col-sm-1">Nombre de vues</div>
-        <div class="col-sm-1">Modifié le</div>
-        <div class="col-sm-1">Actions</div>
-    </div>
-
-    <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
-        <div class="col-sm-2">
-            <input class="form-control" type="text" name="adTitle" maxlength="140"/>
-        </div>
-        <div class="col-sm-2">
-            <input class="form-control" type="text" name="adDescription" maxlength="255"/>
-        </div>
-        <div class="col-sm-1">
-            <input type="hidden" name="adStatus" value="<%= EStatus.VALIDE.ordinal() %>"/>
-        </div>
-        <div class="col-sm-2">
-            <input class="form-control" type="email" name="adSeller" maxlength="64"/>
-        </div>
-        <div class="col-sm-1">
-            <input class="form-control" type="number" name="adPrice" min="0" step="any"/>
-        </div>
-        <div class="col-sm-1">
-            <input type="hidden"/>
-        </div>
-        <div class="col-sm-1">
-            <input type="hidden"/>
-        </div>
-        <div class="col-sm-1">
-            <input type="hidden"/>
-        </div>
-        <div class="col-sm-1">
-            <button type="submit" name="adCreation" value="true">ajouter</button>
-        </div>
-    </form>
-
-    <% for (Ad ad : ((IAdDao) pageContext.getSession().getAttribute("adDao")).getAllAds()) { %>
-    <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
-        <div class="col-sm-2">
-            <%= ad.getTitle() %>
-        </div>
-        <div class="col-sm-2">
-            <%= ad.getDescription() %>
-        </div>
-        <div class="col-sm-1">
-            <%= ad.getStatus().name().toLowerCase() %>
-        </div>
-        <div class="col-sm-2">
-            <%= ad.getSeller() %>
-        </div>
-        <div class="col-sm-1">
-            <%= ad.getPrice() %>
-        </div>
-        <div class="col-sm-1">
-            <%= ad.getSoldAt() != null ? ad.getSoldAt() : "" %>
-        </div>
-        <div class="col-sm-1">
-            <%= ad.getViewNumber() %>
-        </div>
-        <div class="col-sm-1">
-            <%= ad.getModificationAt() != null ? ad.getModificationAt() : "" %>
-        </div>
-        <div class="col-sm-1">
-            <input type="hidden" name="adId" value="<%= ad.getId() %>"/>
-            <button type="submit" name="adValidate" value="true">valider</button>
-            <button type="submit" name="adDelete" value="true">supprimer</button>
-        </div>
-    </form>
-    <% } %>
-</div>
 </body>
 </html>
