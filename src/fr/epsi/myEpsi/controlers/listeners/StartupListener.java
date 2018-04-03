@@ -3,8 +3,7 @@ package fr.epsi.myEpsi.controlers.listeners;
 import fr.epsi.myEpsi.ApplicationStartup;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.controlers.jmx.Ad;
-import fr.epsi.myEpsi.controlers.jmx.AdMBean;
-import fr.epsi.myEpsi.controlers.jmx.Premier;
+import fr.epsi.myEpsi.controlers.jmx.Console;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,7 +47,7 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
             mbs.registerMBean(aMBean, name);
 
             name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=PremierMBean");
-            Premier mbean = new Premier();
+            Console mbean = new Console();
             mbs.registerMBean(mbean, name);
 
 
