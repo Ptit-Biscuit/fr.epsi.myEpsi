@@ -4,6 +4,7 @@ import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
 import fr.epsi.myEpsi.misc.HashUtil;
 import fr.epsi.myEpsi.misc.ServletUtil;
 import fr.epsi.myEpsi.models.beans.User;
+import fr.epsi.myEpsi.models.beans.UserDefault;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,10 +29,16 @@ public class UpdateUserForm {
 		if (oldMail.isEmpty() || mail.isEmpty() || password.isEmpty())
 			return false;
 
-		User user = new User();
+		User user = ((IUserDao) request.getSession().getAttribute("userDao")).find(oldMail);
+
+		if (user instanceof UserDefault)
+			return false;
+
 		user.setMail(mail);
 		user.setPseudo(pseudo);
-		user.setPassword(HashUtil.hashPassword(password));
+
+		if (!password.equals(user.getPassword()))
+			user.setPseudo(HashUtil.hashPassword(password));
 
 		return ((IUserDao) request.getSession().getAttribute("userDao")).updateUser(oldMail, user);
 	}
