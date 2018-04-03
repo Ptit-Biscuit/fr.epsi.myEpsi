@@ -2,6 +2,7 @@ package fr.epsi.myEpsi.controlers.listeners;
 
 import fr.epsi.myEpsi.ApplicationStartup;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
+import fr.epsi.myEpsi.controlers.jmx.AdMBean;
 import fr.epsi.myEpsi.controlers.jmx.ConsoleMBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,90 +22,76 @@ import java.util.Calendar;
  */
 @WebListener()
 public class StartupListener implements ServletContextListener, HttpSessionListener {
-	/**
-	 * Logger
-	 */
-	private static final Logger logger = LogManager.getLogger(StartupListener.class);
+    /**
+     * Logger
+     */
+    private static final Logger logger = LogManager.getLogger(StartupListener.class);
 
-	/**
-	 * Public constructor is required by servlet spec
-	 */
-	public StartupListener() {
-	}
+    /**
+     * Public constructor is required by servlet spec
+     */
+    public StartupListener() {
+    }
 
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
 		/* This method is called when the servlet context is
 			initialized(when the Web application is deployed).
 			You can initialize servlet context related data here. */
 
-		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-		//ICI MBean
-		ObjectName name = null;
-		try {
-			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=IConsoleMBean");
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        //ICI MBean
+        ObjectName name = null;
+        try {
+            name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=IAdMBean");
 
-			ConsoleMBean mbean = new ConsoleMBean();
+            AdMBean mbean = new AdMBean();
 
-			mbs.registerMBean(mbean, name);
+            mbs.registerMBean(mbean, name);
 
-			System.out.println("Lancement ...");
-			while (true) {
+            System.out.println("Lancement ...");
 
-				Thread.sleep(1000);
-				mbean.setValeur(mbean.getValeur() + 1);
-			}
-		} catch (MalformedObjectNameException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (InstanceAlreadyExistsException e) {
-			e.printStackTrace();
-		} catch (MBeanRegistrationException e) {
-			e.printStackTrace();
-		} catch (NotCompliantMBeanException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-		}
+        } catch (MalformedObjectNameException | NotCompliantMBeanException | MBeanRegistrationException | InstanceAlreadyExistsException | NullPointerException e) {
+            e.printStackTrace();
+        }
 
 
+        logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte initialisé");
+    }
 
-		logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte initialisé");
-	}
-
-	@Override
-	public void contextDestroyed(ServletContextEvent sce) {
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
 		/* This method is invoked when the Servlet Context
 			(the Web application) is undeployed or
 			Application Server shuts down */
-		logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte détruit");
-	}
+        logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte détruit");
+    }
 
-	@Override
-	public void sessionCreated(HttpSessionEvent se) {
-		// Session is created
-		logger.info("Session créée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
+    @Override
+    public void sessionCreated(HttpSessionEvent se) {
+        // Session is created
+        logger.info("Session créée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
 
-		ApplicationStartup startup = new ApplicationStartup();
-		startup.initDao(se);
-	}
+        ApplicationStartup startup = new ApplicationStartup();
+        startup.initDao(se);
+    }
 
-	@Override
-	public void sessionDestroyed(HttpSessionEvent se) {
-		// Session is destroyed
-		if (se.getSession().getAttribute("user") != null)
-			se.getSession().removeAttribute("user");
+    @Override
+    public void sessionDestroyed(HttpSessionEvent se) {
+        // Session is destroyed
+        if (se.getSession().getAttribute("user") != null)
+            se.getSession().removeAttribute("user");
 
-		if (se.getSession().getAttribute("userDao") != null) {
-			((IUserDao) se.getSession().getAttribute("userDao")).closeConnection();
-			se.getSession().removeAttribute("userDao");
-		}
+        if (se.getSession().getAttribute("userDao") != null) {
+            ((IUserDao) se.getSession().getAttribute("userDao")).closeConnection();
+            se.getSession().removeAttribute("userDao");
+        }
 
-		if (se.getSession().getAttribute("adDao") != null) {
-			((IUserDao) se.getSession().getAttribute("adDao")).closeConnection();
-			se.getSession().removeAttribute("adDao");
-		}
+        if (se.getSession().getAttribute("adDao") != null) {
+            ((IUserDao) se.getSession().getAttribute("adDao")).closeConnection();
+            se.getSession().removeAttribute("adDao");
+        }
 
-		logger.info("Session terminée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
-	}
+        logger.info("Session terminée le " + DateFormat.getInstance().format(Calendar.getInstance().getTime()));
+    }
 }
