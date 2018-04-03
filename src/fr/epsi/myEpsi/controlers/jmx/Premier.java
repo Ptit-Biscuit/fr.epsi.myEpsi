@@ -1,8 +1,9 @@
 package fr.epsi.myEpsi.controlers.jmx;
 
-public class ConsoleMBean implements IConsoleMBean {
-    private static String nom = "ConsoleMBean";
-    private int valeur = 1;
+public class Premier implements PremierMBean {
+
+    private static String nom = "PremierMBean";
+    private int valeur = 100;
 
     public String getNom() {
         return nom;
@@ -21,7 +22,7 @@ public class ConsoleMBean implements IConsoleMBean {
 
     }
 
-    public ConsoleMBean() {
+    public Premier() {
 
     }
 }

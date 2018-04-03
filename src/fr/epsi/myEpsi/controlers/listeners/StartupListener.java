@@ -2,8 +2,9 @@ package fr.epsi.myEpsi.controlers.listeners;
 
 import fr.epsi.myEpsi.ApplicationStartup;
 import fr.epsi.myEpsi.controlers.database.interfaces.IUserDao;
+import fr.epsi.myEpsi.controlers.jmx.Ad;
 import fr.epsi.myEpsi.controlers.jmx.AdMBean;
-import fr.epsi.myEpsi.controlers.jmx.ConsoleMBean;
+import fr.epsi.myEpsi.controlers.jmx.Premier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,14 +41,16 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 			You can initialize servlet context related data here. */
 
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        //ICI MBean
         ObjectName name = null;
         try {
-            name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=IAdMBean");
+            name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=AdMBean");
+            Ad aMBean = new Ad();
+            mbs.registerMBean(aMBean, name);
 
-            AdMBean mbean = new AdMBean();
-
+            name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=PremierMBean");
+            Premier mbean = new Premier();
             mbs.registerMBean(mbean, name);
+
 
             System.out.println("Lancement ...");
 
