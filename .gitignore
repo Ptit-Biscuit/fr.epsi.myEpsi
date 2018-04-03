@@ -7,3 +7,5 @@ libs/Project server/*.log
 libs/Project server/*.properties
 libs/Project server/*.script
 libs/Project server/*.tmp
+
+libs/Project server/

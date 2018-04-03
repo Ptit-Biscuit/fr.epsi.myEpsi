@@ -8,6 +8,7 @@
 <html>
 <head>
     <%@ include file="header.jsp" %>
+    <%@ include file="navigationBar.jsp" %>
 </head>
 
 <body>
@@ -15,27 +16,6 @@
     out.println("<div class=\"error\">" + pageContext.getAttribute("error") + "</div>");
 %>
 
-<img src="https://media.giphy.com/media/jxJjBMvqEvMSA/giphy.gif"/>
-
-<br/>
-
-<% if (user.getMail().contains("@root")) { %>
-<a href="${pageContext.request.contextPath}/administration">Administration</a>
-
-<br/>
-<% } %>
-
-<a href="${pageContext.request.contextPath}/ads?userMail=<%= user.getMail() %>">Mes annonces</a>
-
-<br/>
-
-<a href="${pageContext.request.contextPath}/createAd">Créer une annonce</a>
-
-<br/>
-
-<a href="${pageContext.request.contextPath}/logout">Déconnexion</a>
-
-<br/>
 
 <div class="card-deck" style="max-width: 98%">
     <% for (Ad ad : (List<Ad>) pageContext.getRequest().getAttribute("ads")) { %>

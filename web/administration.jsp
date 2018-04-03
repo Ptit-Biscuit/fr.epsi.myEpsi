@@ -9,6 +9,12 @@
 <html>
 <head>
     <%@ include file="header.jsp" %>
+    <%@ include file="navigationBar.jsp" %>
+    <meta charset="UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 
 <body>
@@ -18,17 +24,17 @@
 </div>
 <% } %>
 
-<a href="${pageContext.request.contextPath}/welcome">Retour</a>
-
 <br/>
+
+<h1>Utilisateurs</h1>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2">mail</div>
-        <div class="col-sm-2">pseudo</div>
-        <div class="col-sm-3">mot de passe</div>
-        <div class="col-sm-2">date d'inscription</div>
-        <div class="col-sm-2">actions</div>
+        <div class="col-sm-2">Mail</div>
+        <div class="col-sm-2">Pseudo</div>
+        <div class="col-sm-3">Mot de passe</div>
+        <div class="col-sm-2">Date d'inscription</div>
+        <div class="col-sm-2">Actions</div>
     </div>
 
     <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
@@ -76,17 +82,50 @@
     <% } %>
 </div>
 
+<h1>Annonces</h1>
+
+<table>
+    <tr>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Statut</th>
+        <th>Vendeur</th>
+        <th>Prix</th>
+        <th>Vendu le</th>
+        <th>Nombre de vues</th>
+        <th>Modifié le</th>
+        <th>Actions</th>
+    </tr>
+    <% for (Ad ad : ((IAdDao) pageContext.getSession().getAttribute("adDao")).getAllAds()) { %>
+    <tr>
+        <th><%= ad.getTitle() %></th>
+        <th><%= ad.getDescription() %></th>
+        <th><%= ad.getStatus().name().toLowerCase() %></th>
+        <th><%= ad.getSeller() %></th>
+        <th><%= ad.getPrice() %></th>
+        <th><%= ad.getSoldAt() != null ? ad.getSoldAt() : "" %></th>
+        <th><%= ad.getViewNumber() %></th>
+        <th><%= ad.getModificationAt() != null ? ad.getModificationAt() : "" %></th>
+        <th>
+            <input type="hidden" name="adId" value="<%= ad.getId() %>"/>
+            <button type="submit" name="adValidate" value="true">Valider</button>
+            <button type="submit" name="adDelete" value="true">Supprimer</button>
+        </th>
+    </tr>
+    <% } %>
+</table>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2">titre</div>
-        <div class="col-sm-2">description</div>
-        <div class="col-sm-1">status</div>
-        <div class="col-sm-2">vendeur</div>
-        <div class="col-sm-1">prix</div>
-        <div class="col-sm-1">vendu le</div>
-        <div class="col-sm-1">nombre de vues</div>
-        <div class="col-sm-1">modifié le</div>
-        <div class="col-sm-1">actions</div>
+        <div class="col-sm-2">Titre</div>
+        <div class="col-sm-2">Description</div>
+        <div class="col-sm-1">Status</div>
+        <div class="col-sm-2">Vendeur</div>
+        <div class="col-sm-1">Prix</div>
+        <div class="col-sm-1">Vendu le</div>
+        <div class="col-sm-1">Nombre de vues</div>
+        <div class="col-sm-1">Modifié le</div>
+        <div class="col-sm-1">Actions</div>
     </div>
 
     <form class="row form-horizontal" method="post" action="${pageContext.request.contextPath}/administration">
