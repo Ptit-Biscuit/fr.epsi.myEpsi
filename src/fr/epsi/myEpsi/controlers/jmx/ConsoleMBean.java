@@ -1,18 +1,27 @@
 package fr.epsi.myEpsi.controlers.jmx;
 
-import java.util.List;
-import java.util.Map;
-
+/**
+ * ConsoleMonitoring MBean interface
+ */
 public interface ConsoleMBean {
 
-    /**
-     * liste tous les loggers
-     */
-    public void getLogger();
+	/**
+	 * Getter logger
+	 */
+	void getLogger();
 
-    /**
-     * Modifie le niveau de log d'un element
-     */
-    public void setLogLevel(String logger, String level);
+	/**
+	 * Set the debug level for all loggers
+	 */
+	void setLogDebug();
 
+	/**
+	 * Set the info level for all loggers
+	 */
+	void setLogInfo();
+
+	/**
+	 * Set the error level for all loggers
+	 */
+	void setLogError();
 }
