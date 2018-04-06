@@ -24,6 +24,11 @@ public class DaoFactory {
 	private static final Logger LOGGER = LogManager.getLogger(DaoFactory.class);
 
 	/**
+	 * DaoFactory sole instance
+	 */
+	private static DaoFactory instance;
+
+	/**
 	 * Database's URL
 	 */
 	private String url;
@@ -54,9 +59,9 @@ public class DaoFactory {
 	/**
 	 * Retrieve connection's informations and load driver
 	 *
-	 * @return DAO instance
+	 * @return new instance of DaoFactory
 	 */
-	public static DaoFactory getInstance() {
+	private static DaoFactory initialize() {
 		String driver = "";
 		String databaseName = "";
 		String url = "";
@@ -88,7 +93,18 @@ public class DaoFactory {
 			LOGGER.error("Le driver est introuvable", e);
 		}
 
-		return new DaoFactory(url, user, password);
+		instance = new DaoFactory(url, user, password);
+
+		return instance;
+	}
+
+	/**
+	 * Getter sole instance
+	 *
+	 * @return DAO instance
+	 */
+	public static DaoFactory getInstance() {
+		return instance != null ? instance : initialize();
 	}
 
 	/**

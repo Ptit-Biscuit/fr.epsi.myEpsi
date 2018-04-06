@@ -1,7 +1,6 @@
 package fr.epsi.myEpsi.controlers.jmx;
 
 import fr.epsi.myEpsi.controlers.database.DaoFactory;
-import fr.epsi.myEpsi.controlers.database.interfaces.IAdDao;
 import org.apache.logging.log4j.LogManager;
 
 import java.sql.SQLException;
@@ -11,24 +10,29 @@ import java.sql.SQLException;
  */
 public class AdMonitoring implements AdMonitoringMBean {
 	/**
-	 * The class constructor
+	 * Number of ads
 	 */
-	public AdMonitoring() {}
+	private int ads = -1;
 
 	/**
-	 * @return The number of ad
+	 * Constructor
 	 */
-	public int getNbAd() {
-		IAdDao adDao = null;
-		int nbAd = -1;
+	public AdMonitoring() {
+		this.updateAds();
+	}
 
+	private void updateAds() {
 		try {
-			adDao = DaoFactory.getInstance().getAdDao();
-			nbAd = adDao.getAllAds().size();
+			this.ads = DaoFactory.getInstance().getAdDao().getAllAds().size();
 		} catch (SQLException e) {
+			ads = -1;
 			LogManager.getLogger(AdMonitoring.class).error("Impossible de récupérer le nombre d'annonces", e);
 		}
+	}
 
-		return nbAd;
+	@Override
+	public int getNbAd() {
+		this.updateAds();
+		return this.ads;
 	}
 }

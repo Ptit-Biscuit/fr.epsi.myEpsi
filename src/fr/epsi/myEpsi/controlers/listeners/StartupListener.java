@@ -40,9 +40,9 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 		/* This method is called when the servlet context is
 			initialized(when the Web application is deployed).
 			You can initialize servlet context related data here. */
-
 		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 		ObjectName name;
+
 		try {
 			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=AdMonitoringMBean");
 			AdMonitoring adMBean = new AdMonitoring();
@@ -54,8 +54,8 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 
 			logger.info("Lancement monitoring (MBeans) ...");
 
-		} catch (MalformedObjectNameException | NotCompliantMBeanException | MBeanRegistrationException | InstanceAlreadyExistsException | NullPointerException e) {
-			e.printStackTrace();
+		} catch (MalformedObjectNameException | NotCompliantMBeanException | MBeanRegistrationException | InstanceAlreadyExistsException e) {
+			logger.error("Impossible d'initialiser les MBeans", e);
 		}
 
 		logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte initialisé");

@@ -8,20 +8,20 @@ public interface ConsoleMonitoringMBean {
 	/**
 	 * Getter logger
 	 */
-	void getLogger();
+	String getLogger();
 
 	/**
 	 * Set the debug level for all loggers
 	 */
-	void setLogDebug();
+	String setLogDebug();
 
 	/**
 	 * Set the info level for all loggers
 	 */
-	void setLogInfo();
+	String setLogInfo();
 
 	/**
 	 * Set the error level for all loggers
 	 */
-	void setLogError();
+	String setLogError();
 }

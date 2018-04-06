@@ -16,22 +16,25 @@ public class ConsoleMonitoring implements ConsoleMonitoringMBean {
 	}
 
 	@Override
-	public void getLogger() {
-		LogManager.getRootLogger().getLevel();
+	public String getLogger() {
+		return LogManager.getRootLogger().getLevel().name();
 	}
 
 	@Override
-	public void setLogDebug() {
+	public String setLogDebug() {
 		Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.DEBUG);
+		return "Level set to DEBUG";
 	}
 
 	@Override
-	public void setLogInfo() {
+	public String setLogInfo() {
 		Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.INFO);
+		return "Level set to INFO";
 	}
 
 	@Override
-	public void setLogError() {
+	public String setLogError() {
 		Configurator.setAllLevels(LogManager.getRootLogger().getName(), Level.ERROR);
+		return "Level set to ERROR";
 	}
 }
