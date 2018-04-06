@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <div class="card border-secondary mb-3" style="max-width: 20rem;">
-    <div class="card-header">
+    <div class="card-header <% if (!ServletUtil.retrieveValue(request, "owner").isEmpty()) { %>bg-success<% } %>">
         <h5 class="card-title text-center">${param.title}</h5>
         <p class="card-text">${param.status}</p>
     </div>
@@ -11,6 +11,10 @@
         <p class="card-text">${param.desc}</p>
         <p class="card-text">${param.price}</p>
         <p class="card-text text-right">${param.seller}</p>
+
+        <% if (!ServletUtil.retrieveValue(request, "modification").isEmpty()) { %>
+        <p class="card-text text-right">${param.modification}</p>
+        <% } %>
     </div>
 
     <div class="card-footer">
