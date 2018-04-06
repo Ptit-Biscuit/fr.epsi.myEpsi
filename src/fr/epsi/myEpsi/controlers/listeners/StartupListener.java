@@ -44,11 +44,11 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 		ObjectName name;
 		try {
-			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=AdMBean");
+			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=AdMonitoringMBean");
 			AdMonitoring adMBean = new AdMonitoring();
 			mbs.registerMBean(adMBean, name);
 
-			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=ConsoleMBean");
+			name = new ObjectName("fr.epsi.myEpsi.controlers.jmx:type=ConsoleMonitoringMBean");
 			ConsoleMonitoring consoleMBean = new ConsoleMonitoring();
 			mbs.registerMBean(consoleMBean, name);
 
@@ -57,7 +57,6 @@ public class StartupListener implements ServletContextListener, HttpSessionListe
 		} catch (MalformedObjectNameException | NotCompliantMBeanException | MBeanRegistrationException | InstanceAlreadyExistsException | NullPointerException e) {
 			e.printStackTrace();
 		}
-
 
 		logger.debug(DateFormat.getInstance().format(Calendar.getInstance().getTime()) + " -> Contexte initialisé");
 	}

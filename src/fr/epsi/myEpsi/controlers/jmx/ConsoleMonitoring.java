@@ -7,7 +7,7 @@ import org.apache.logging.log4j.core.config.Configurator;
 /**
  * Console monitoring MBean
  */
-public class ConsoleMonitoring implements ConsoleMBean {
+public class ConsoleMonitoring implements ConsoleMonitoringMBean {
 
 	/**
 	 * Constructor

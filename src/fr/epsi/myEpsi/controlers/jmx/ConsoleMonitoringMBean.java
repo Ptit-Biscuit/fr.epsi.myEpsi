@@ -3,7 +3,7 @@ package fr.epsi.myEpsi.controlers.jmx;
 /**
  * ConsoleMonitoring MBean interface
  */
-public interface ConsoleMBean {
+public interface ConsoleMonitoringMBean {
 
 	/**
 	 * Getter logger

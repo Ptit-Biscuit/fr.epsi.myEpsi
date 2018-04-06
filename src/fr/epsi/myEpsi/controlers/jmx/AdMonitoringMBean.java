@@ -3,7 +3,7 @@ package fr.epsi.myEpsi.controlers.jmx;
 /**
  * AdMonitoring MBean interface
  */
-public interface AdMBean {
+public interface AdMonitoringMBean {
 	/**
 	 * Number of ads
 	 *
